@@ -4,9 +4,18 @@ void setup() {
   textureMode(NORMAL); // uses normalized 0..1 texture coords
   textureWrap(REPEAT);
   
-  setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually 
+  setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
+  
+  w = new WorldSection(0,0);
 }
 
-
+WorldSection w;
 void draw() {
+  background(0,0,0);
+  
+  fill(1,0,1);
+  noStroke();
+  beginShape(TRIANGLES);
+  w.print();
+  endShape();
 }
