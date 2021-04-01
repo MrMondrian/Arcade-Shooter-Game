@@ -14,7 +14,6 @@ void setup() {
 
 World world;
 void draw() {
-  printProjection();
   background(0,0,0);
   
   fill(1,0,1);
