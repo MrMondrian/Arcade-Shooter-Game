@@ -1,5 +1,34 @@
 final float TILE_SIZE = 20;
 final int WORLD_SIZE = 256;
+final float SCROLL_SPEED = 2;
+
+class World
+{
+  WorldSection w1;
+  WorldSection w2;
+  
+  public World()
+  {
+    w1 = new WorldSection(0,0,0);
+    w2 = new WorldSection(0,0,-640);
+  }
+  
+  public void print()
+  {
+    w1.print();
+    w2.print();
+  }
+  
+  public void increment()
+  {
+    w1.offset += SCROLL_SPEED;
+    if(w1.offset >= 640)
+      w1.offset = -640;
+    w2.offset += SCROLL_SPEED;
+    if(w2.offset >= 640)
+      w2.offset = -640;
+  }
+}
 
 class WorldSection
 {

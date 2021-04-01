@@ -6,26 +6,19 @@ void setup() {
   
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
   
-  w1 = new WorldSection(0,0,0);
-  w2 = new WorldSection(0,0,-640);
+  world = new World();
 }
 
-WorldSection w1;
-WorldSection w2;
+World world;
 void draw() {
   background(0,0,0);
   
   fill(1,0,1);
   noStroke();
   beginShape(TRIANGLES);
-  w1.print();
-  w1.offset += 1;
-  if(w1.offset >= 640)
-    w1.offset = -640;
-    
-  w2.print();
-  w2.offset += 1;
-  if(w2.offset >= 640)
-    w2.offset = -640;
+
+  world.print();
+  world.increment();
+
   endShape();
 }
