@@ -7,11 +7,13 @@ class WorldSection
   
   float x;
   float y;
+  float offset;
   
-  public WorldSection(float _x, float _y)
+  public WorldSection(float _x, float _y, float o)
   {
     x = _x;
     y = _y;
+    offset = o;
     tiles = new Tile[WORLD_SIZE];
     int k = 0;
     for(float j = 20; j < 640; j += 2 * TILE_SIZE)
@@ -31,7 +33,7 @@ class WorldSection
     y++;
     translate(x,y);
     for(int i = 0; i < tiles.length; i++)
-      tiles[i].print();
+      tiles[i].print(offset);
     popMatrix();
   }
   
@@ -52,15 +54,16 @@ class Tile
     c = color(random(0,1), random(0,1), random(0,1));
   }
   
-  public void print()
+  public void print(float offset)
   {
     fill(c);
-    vertex(x - TILE_SIZE, y + TILE_SIZE);
-    vertex(x - TILE_SIZE, y - TILE_SIZE);
-    vertex(x + TILE_SIZE, y + TILE_SIZE);
+    float drawY = y + offset;
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE);
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE);
     
-    vertex(x - TILE_SIZE, y - TILE_SIZE);
-    vertex(x + TILE_SIZE, y - TILE_SIZE);
-    vertex(x + TILE_SIZE, y + TILE_SIZE);
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE);
+    vertex(x + TILE_SIZE, drawY - TILE_SIZE);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE);
   }
 }
