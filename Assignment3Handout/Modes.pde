@@ -14,9 +14,26 @@ boolean doBonus = false;
 boolean doTextures = false;
 boolean doCollision = false;
 
+boolean isOrtho = true;
+
 void keyPressed()
 {
 }
 
 void keyReleased() {
+  if(key == KEY_VIEW)
+  {
+     if(isOrtho)
+     {
+       camera(1, 2, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
+       frustum(-1, 1, 1, -1, -1.5, 1);
+       isOrtho = false;
+     }
+     else
+     {
+        camera(1, 1, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
+        ortho(-1,1,-1,1);
+        isOrtho = true;
+     }
+  }
 }

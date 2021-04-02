@@ -78,6 +78,7 @@ class Tile
   {
     x = _x;
     y = _y;
+    z = random(0,1) * 0.1 - 0.5;
     c = color(random(0,1), random(0,1), random(0,1));
   }
   
@@ -85,12 +86,12 @@ class Tile
   {
     fill(c);
     float drawY = y + offset;
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE);
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE);
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
     
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE);
-    vertex(x + TILE_SIZE, drawY - TILE_SIZE);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE);
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
   }
 }
