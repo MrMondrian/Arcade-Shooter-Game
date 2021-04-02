@@ -10,7 +10,7 @@ class World
   public World()
   {
     w1 = new WorldSection(0);
-    w2 = new WorldSection(-2);
+    w2 = new WorldSection(-6);
   }
   
   public void print()
@@ -22,14 +22,14 @@ class World
   public void increment()
   {
     w1.offset += SCROLL_SPEED;
-    if(w1.offset >= 2){
+    if(w1.offset >= 4){
       println(w2.offset);
-      w1.offset = -1.99;
+      w1.offset = -7.99;
     }
     w2.offset += SCROLL_SPEED;
-    if(w2.offset >= 2) {
+    if(w2.offset >= 4) {
       println(w1.offset);
-      w2.offset = -1.99;
+      w2.offset = -7.99;
     }
   }
 }
@@ -45,11 +45,11 @@ class WorldSection
   {
 
     offset = o;
-    tiles = new Tile[WORLD_SIZE];
+    tiles = new Tile[WORLD_SIZE * 9];
     int k = 0;
-    for(float j = TILE_SIZE; j <2; j += 2 * TILE_SIZE)
+    for(float j = TILE_SIZE; j <6; j += 2 * TILE_SIZE)
     {
-      for(float i = TILE_SIZE; i < 2; i += 2*TILE_SIZE)
+      for(float i = TILE_SIZE - 2; i < 4; i += 2*TILE_SIZE)
       {
         Tile t = new Tile(i, j);
         tiles[k] = t;
