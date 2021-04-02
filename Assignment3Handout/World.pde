@@ -86,6 +86,16 @@ class Tile
   {
     fill(c);
     float drawY = y + offset;
+    
+    
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    
     vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
     vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);

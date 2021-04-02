@@ -25,8 +25,8 @@ void keyReleased() {
   {
      if(isOrtho)
      {
-       camera(1, 2, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
-       frustum(-1, 1, 1, -1, -1.5, 1);
+       camera(1, 3, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
+       frustum(-0.25, 0.25, -0.25, 0.25, 1, -1);
        isOrtho = false;
      }
      else
