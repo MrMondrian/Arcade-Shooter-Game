@@ -23,12 +23,10 @@ class World
   {
     w1.offset += SCROLL_SPEED;
     if(w1.offset >= 4){
-      println(w2.offset);
       w1.offset = -7.99;
     }
     w2.offset += SCROLL_SPEED;
     if(w2.offset >= 4) {
-      println(w1.offset);
       w2.offset = -7.99;
     }
   }
@@ -87,21 +85,44 @@ class Tile
     fill(c);
     float drawY = y + offset;
     
+    //left face
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE, -1);
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
     
+    //left face
+    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
+    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    
+    //right face
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
+    
+    //right face
+    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
+    vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
+    
+    //front face
     vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
     vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-    
+    //front face
     vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
     
+    //top face
     vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
     vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    
+    //topface
     vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
     vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
     vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    
+    
   }
 }
