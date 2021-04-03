@@ -16,7 +16,7 @@ void setup() {
 World world;
 void draw() {
   background(0,0,0);
-  
+  player.move(moveX,moveY);
   fill(1,0,1);
   noStroke();
   beginShape(TRIANGLES);

@@ -1,5 +1,13 @@
 Player player;
 
+float moveX = 0;
+float moveY = 0;
+boolean right = false;
+boolean left = false;
+boolean up = false;
+boolean down = false;
+final float MOVE_SPEED = 0.05;
+
 abstract class Person
 {
  
@@ -33,6 +41,16 @@ class Player extends Person
     vertex(x - size, y - size, z);
     vertex(x + size, y - size, z);
     vertex(x + size, y + size, z);    
+  }
+  
+  public void move(float addX, float addY)
+  {
+   if(x + addX >= 0 && x + addX <=2)
+     x += addX;
+    
+   if(y + addY >= 0 && y + addY <=2)
+     y += addY;
+   
   }
 }
 

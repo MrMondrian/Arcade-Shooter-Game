@@ -10,6 +10,11 @@ final char KEY_BONUS = 'b';
 final char KEY_TEX = 't';
 final char KEY_COLLISION = 'c';
 
+final char MOVE_RIGHT = 'd';
+final char MOVE_LEFT = 'a';
+final char MOVE_UP = 'w';
+final char MOVE_DOWN = 's';
+
 boolean doBonus = false;
 boolean doTextures = false;
 boolean doCollision = false;
@@ -18,9 +23,6 @@ boolean isOrtho = true;
 
 void keyPressed()
 {
-}
-
-void keyReleased() {
   if(key == KEY_VIEW)
   {
      if(isOrtho)
@@ -35,5 +37,42 @@ void keyReleased() {
         ortho(-1,1,-1,1);
         isOrtho = true;
      }
+  }
+  
+  if(key == MOVE_RIGHT)
+  {
+    moveX += MOVE_SPEED;
+  }
+  else if(key == MOVE_LEFT)
+  {
+    moveX -= MOVE_SPEED;
+  }
+  else if(key == MOVE_DOWN)
+  {
+    moveY += MOVE_SPEED;
+  }
+  else if(key == MOVE_UP)
+  {
+    moveY -= MOVE_SPEED;
+  }
+    
+}
+
+void keyReleased() {
+  if(key == MOVE_RIGHT)
+  {
+    moveX -= MOVE_SPEED;
+  }
+  else if(key == MOVE_LEFT)
+  {
+    moveX += MOVE_SPEED;
+  }
+  else if(key == MOVE_DOWN)
+  {
+    moveY -= MOVE_SPEED;
+  }
+  else if(key == MOVE_UP)
+  {
+    moveY += MOVE_SPEED;
   }
 }
