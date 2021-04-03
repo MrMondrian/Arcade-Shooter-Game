@@ -10,6 +10,7 @@ void setup() {
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
   
   world = new World();
+  player = new Player(1, 1);
 }
 
 World world;
@@ -25,6 +26,7 @@ void draw() {
   
   world.print();
   world.increment();
+  player.print();
 
   endShape();
 }

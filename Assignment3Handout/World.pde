@@ -22,12 +22,12 @@ class World
   public void increment()
   {
     w1.offset += SCROLL_SPEED;
-    if(w1.offset >= 4){
-      w1.offset = -7.99;
+    if(w1.offset >= 2){
+      w1.offset = -9.99;
     }
     w2.offset += SCROLL_SPEED;
-    if(w2.offset >= 4) {
-      w2.offset = -7.99;
+    if(w2.offset >= 2) {
+      w2.offset = -9.99;
     }
   }
 }
