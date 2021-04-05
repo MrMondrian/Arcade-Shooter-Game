@@ -11,6 +11,7 @@ void setup() {
   
   world = new World();
   player = new Player(1, 1);
+  enemies.add(new Enemy());
 }
 
 World world;
@@ -28,8 +29,11 @@ void draw() {
   world.print();
   world.increment();
   player.print();
+  for(int i = 0; i < enemies.size(); i++)
+    enemies.get(i).print();
 
   endShape();
+  
 }
 
 void pollKeys()

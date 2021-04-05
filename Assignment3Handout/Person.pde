@@ -7,15 +7,59 @@ boolean left = false;
 boolean up = false;
 boolean down = false;
 final float MOVE_SPEED = 0.05;
+ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 abstract class Person
 {
  
   float size;
-  float x;
-  float y;
-  float z;
+  PVector position;
   color c;
+  
+    public void print()
+  {
+         
+    fill(c);
+    //top face
+    vertex(position.x - size, position.y + size, position.z);
+    vertex(position.x - size, position.y - size, position.z);
+    vertex(position.x + size, position.y + size, position.z);
+    //topface
+    vertex(position.x - size, position.y - size, position.z);
+    vertex(position.x + size, position.y - size, position.z);
+    vertex(position.x + size, position.y + size, position.z); 
+    
+  }
+}
+
+class Enemy extends Person
+{
+  boolean moving;
+  KeyFrame whereTo;
+  public Enemy()
+  {
+    size = 0.2;
+    x = random(0,2);
+    y = random(0,0.5);
+    z = -0.2;
+    c = color(0,1,0);
+    moving = false;
+    whereTo = null;
+  }
+  
+  public void update()
+  {
+    if(!moving)
+    {
+      float gamble = random(0,1);
+      if(gamble >= 0.99)
+      {
+        whereTo = new KeyFrame();
+      }
+    }
+  }
+  
+
 }
 
 class Player extends Person
@@ -32,15 +76,17 @@ class Player extends Person
   
   public void print()
   {
-    fill(c);
-    //top face
-    vertex(x - size, y + size, z);
-    vertex(x - size, y - size, z);
-    vertex(x + size, y + size, z);
-    //topface
-    vertex(x - size, y - size, z);
-    vertex(x + size, y - size, z);
-    vertex(x + size, y + size, z);    
+    //if(right)
+    //  rotateY(PI/6.0);
+    //if(left)
+    //  rotateY(-PI/6.0);
+    //if(up)
+    //  rotateX(PI/6.0);
+    //if(down)
+    //  rotateX(-PI/6.0);
+      
+    super.print();
+    
   }
   
   public void move(float addX, float addY)
@@ -52,9 +98,4 @@ class Player extends Person
      y += addY;
    
   }
-}
-
-class Enemy extends Person
-{
-  
 }
