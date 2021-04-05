@@ -97,7 +97,7 @@ class Player extends Person
     //if(down)
     //  rotateX(-PI/6.0);
       
-    super.print();
+    super.print(); 
     
   }
   
@@ -105,7 +105,10 @@ class Player extends Person
   {
     if(!right && !left && !up && !down)
     {
-      
+      PVector goHome = home.copy();
+      goHome.sub(position);
+      goHome.mult(0.015 / (goHome.mag() + 0.1));
+      position.add(goHome);
     }
     else
     {
