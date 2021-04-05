@@ -15,16 +15,13 @@ void setup() {
 
 World world;
 void draw() {
-  background(0,0,0);
-  pollKeys();
-  player.move(moveX,moveY);
-  fill(1,0,1);
+
+  pollM
   noStroke();
   beginShape(TRIANGLES);
   //vertex(0,0);
   //vertex(640,0);
   //vertex(320,640);
-  
   world.print();
   world.increment();
   player.print();
@@ -34,14 +31,24 @@ void draw() {
 
 void pollKeys()
 {
-   moveX = 0;
-   moveY = 0;
-   if(right)
-     moveX += MOVE_SPEED;
-   if(left)
-     moveX -= MOVE_SPEED;
-   if(up)
-     moveY -= MOVE_SPEED;
-   if(down)
-     moveY += MOVE_SPEED;
+  moveX = 0;
+  moveY = 0;
+  if(right)
+    moveX += MOVE_SPEED;
+  if(left)
+    moveX -= MOVE_SPEED;
+  if(down)
+    moveY += MOVE_SPEED;
+  if(up)
+    moveY -= MOVE_SPEED;
+}
+
+void setOrtho()
+{
+  camera(1, 1, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
+}
+
+void setFrustum()
+{
+  camera(1, 2.5, (0.5) / tan(PI*30.0 / 180.0), 1, 1.5, 0, 0, 1, 0);
 }

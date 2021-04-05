@@ -41,19 +41,19 @@ void keyPressed()
   
   if(key == MOVE_RIGHT)
   {
-    moveX += MOVE_SPEED;
+    right = true;
   }
   else if(key == MOVE_LEFT)
   {
-    moveX -= MOVE_SPEED;
+    left = true;
   }
   else if(key == MOVE_DOWN)
   {
-    moveY += MOVE_SPEED;
+    down = true;
   }
   else if(key == MOVE_UP)
   {
-    moveY -= MOVE_SPEED;
+    up = true;
   }
     
 }
@@ -61,18 +61,18 @@ void keyPressed()
 void keyReleased() {
   if(key == MOVE_RIGHT)
   {
-    moveX -= MOVE_SPEED;
+    right = false;
   }
   else if(key == MOVE_LEFT)
   {
-    moveX += MOVE_SPEED;
+    left = false;
   }
   else if(key == MOVE_DOWN)
   {
-    moveY -= MOVE_SPEED;
+    down = false;
   }
   else if(key == MOVE_UP)
   {
-    moveY += MOVE_SPEED;
+    up = false;
   }
 }
