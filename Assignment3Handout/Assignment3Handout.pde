@@ -18,7 +18,7 @@ World world;
 void draw() {
   background(0,0,0);
   pollKeys();
-  player.move(moveX,moveY);
+  player.update(moveX,moveY);
   fill(1,0,1);
   noStroke();
   beginShape(TRIANGLES);

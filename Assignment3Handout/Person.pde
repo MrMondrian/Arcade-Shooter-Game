@@ -10,6 +10,8 @@ final float MOVE_SPEED = 0.05;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 final float PERSON_Z = -0.2;
+final PVector home = new PVector(1, 1.5, PERSON_Z);
+
 
 abstract class Person
 {
@@ -56,8 +58,9 @@ class Enemy extends Person
       if(gamble >= 0.99)
       {
         PVector location = new PVector(random(0,2),random(0,2), PERSON_Z);
-        whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), 2000000000);
-        println("START");
+        PVector diff = location.copy().sub(position);
+        float time = diff.mag() * 2000000000; //make this not a magic number
+        whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
         moving = true;
       }
     }
@@ -98,13 +101,20 @@ class Player extends Person
     
   }
   
-  public void move(float addX, float addY)
+  public void update(float addX, float addY)
   {
-   if(position.x + addX >= 0 && position.x + addX <=2)
-     position.x += addX;
-    
-   if(position.y + addY >= 0 && position.y + addY <=2)
-     position.y += addY;
- 
+    if(!right && !left && !up && !down)
+    {
+      
+    }
+    else
+    {
+      if(position.x + addX >= 0 && position.x + addX <=2)
+        position.x += addX;
+      
+      if(position.y + addY >= 0 && position.y + addY <=2)
+        position.y += addY;
+    }
   }
+  
 }
