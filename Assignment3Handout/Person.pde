@@ -81,7 +81,7 @@ class Player extends Person
   public Player(float _x, float _y)
   {
      size = 0.15;
-     position = new PVector(_x, _y, PERSON_Z);
+     position = home.copy();
 
      c = color(0,0,1);
   }
@@ -101,9 +101,9 @@ class Player extends Person
     
   }
   
-  public void update(float addX, float addY)
+  public void update()
   {
-    if(!right && !left && !up && !down)
+    if(moveX == 0 && moveY == 0)
     {
       PVector goHome = home.copy();
       goHome.sub(position);
@@ -112,11 +112,11 @@ class Player extends Person
     }
     else
     {
-      if(position.x + addX >= 0 && position.x + addX <=2)
-        position.x += addX;
+      if(position.x + moveX >= 0 && position.x + moveX <=2)
+        position.x += moveX;
       
-      if(position.y + addY >= 0 && position.y + addY <=2)
-        position.y += addY;
+      if(position.y + moveY >= 0 && position.y + moveY <=2)
+        position.y += moveY;
     }
   }
   
