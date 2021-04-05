@@ -56,7 +56,7 @@ class Enemy extends Person
       if(gamble >= 0.99)
       {
         PVector location = new PVector(random(0,2),random(0,2), PERSON_Z);
-        whereTo = new KeyFrame(position, location, System.nanoTime(), 2000000000);
+        whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), 2000000000);
         println("START");
         moving = true;
       }

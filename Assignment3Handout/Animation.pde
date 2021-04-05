@@ -21,14 +21,13 @@ class KeyFrame
     float t1;
     if(t < 1)
     {
-      t1 = 1 - cos(t * PI/2.0);
+      t1 = (1 - cos(t * PI/2.0)) / 2.0;
     }
     else
     {
-      t1 = sin(t * PI/2.0);
+      t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
     }
-    t1 /= 2;
-    println(t1);
+  
     
     return lerpVectors(t1);
   }
@@ -50,5 +49,5 @@ class KeyFrame
 
 float _myLerp(float a, float b, float t)
 {
-  return (t - 1)*a + t*b;
+  return (1 - t)*a + t*b;
 }
