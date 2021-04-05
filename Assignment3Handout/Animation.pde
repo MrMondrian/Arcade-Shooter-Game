@@ -4,21 +4,22 @@ class KeyFrame
   PVector end;
   
   float begin;
-  float time;
+  float elapsed;
   
-  public KeyFrame(PVector s, PVector e, float b, float t)
+  public KeyFrame(PVector s, PVector e, float b, float el)
   {
     start = s;
     end  = e;
     begin = b;
-    time = t;
+    elapsed = el;
   }
   
   PVector getPosition()
   {
-    float t = (System.nanoTime() - begin) / time;
+    float t = (System.nanoTime() - begin) / elapsed;
+    t *= 2;
     float t1;
-    if(t < 0.5)
+    if(t < 1)
     {
       t1 = 1 - cos(t * PI/2.0);
     }
@@ -26,6 +27,8 @@ class KeyFrame
     {
       t1 = sin(t * PI/2.0);
     }
+    t1 /= 2;
+    println(t1);
     
     return lerpVectors(t1);
   }
@@ -34,12 +37,12 @@ class KeyFrame
   {
     float x = _myLerp(start.x, end.x, t);
     float y = _myLerp(start.y, end.y, t);
-    return new PVector(x,y);
+    return new PVector(x,y, PERSON_Z);
   }
   
   boolean finished()
   {
-    return System.nanoTime() - begin >= time;
+    return System.nanoTime() - begin >=elapsed;
   }
 }
 

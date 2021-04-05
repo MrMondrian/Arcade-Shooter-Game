@@ -30,7 +30,10 @@ void draw() {
   world.increment();
   player.print();
   for(int i = 0; i < enemies.size(); i++)
+  {
     enemies.get(i).print();
+    enemies.get(i).update();
+  }
 
   endShape();
   

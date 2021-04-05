@@ -9,6 +9,8 @@ boolean down = false;
 final float MOVE_SPEED = 0.05;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
+final float PERSON_Z = -0.2;
+
 abstract class Person
 {
  
@@ -39,9 +41,8 @@ class Enemy extends Person
   public Enemy()
   {
     size = 0.2;
-    x = random(0,2);
-    y = random(0,0.5);
-    z = -0.2;
+    position = new PVector(random(0,2), random(0,0.5),PERSON_Z);
+
     c = color(0,1,0);
     moving = false;
     whereTo = null;
@@ -54,8 +55,17 @@ class Enemy extends Person
       float gamble = random(0,1);
       if(gamble >= 0.99)
       {
-        whereTo = new KeyFrame();
+        PVector location = new PVector(random(0,2),random(0,2), PERSON_Z);
+        whereTo = new KeyFrame(position, location, System.nanoTime(), 2000000000);
+        println("START");
+        moving = true;
       }
+    }
+    else
+    {
+      position = whereTo.getPosition();
+      if(whereTo.finished())
+        moving = false;
     }
   }
   
@@ -68,9 +78,8 @@ class Player extends Person
   public Player(float _x, float _y)
   {
      size = 0.15;
-     x = _x;
-     y = _y;
-     z = -0.2;
+     position = new PVector(_x, _y, PERSON_Z);
+
      c = color(0,0,1);
   }
   
@@ -91,11 +100,11 @@ class Player extends Person
   
   public void move(float addX, float addY)
   {
-   if(x + addX >= 0 && x + addX <=2)
-     x += addX;
+   if(position.x + addX >= 0 && position.x + addX <=2)
+     position.x += addX;
     
-   if(y + addY >= 0 && y + addY <=2)
-     y += addY;
-   
+   if(position.y + addY >= 0 && position.y + addY <=2)
+     position.y += addY;
+ 
   }
 }
