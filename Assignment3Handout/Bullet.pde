@@ -28,7 +28,6 @@ class Bullet
   public void update()
   {
     PVector toAdd = direction.copy().mult(0.1);//fix magic number
-    toAdd.y *= -1;
     position.add(toAdd);
     if(position.x < 0 || position.x > 2 || position.y < 0 || position.y > 2)
       alive = false;

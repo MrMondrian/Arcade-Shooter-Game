@@ -36,6 +36,9 @@ abstract class Person
   }
 }
 
+float moveProb = 0.01; //processing wouldn't let me make these static in Enemy unless it was final
+float shootProb = 0.1;
+color ENEMY_BULLET_COLOR = color(0,1,0);
 class Enemy extends Person
 {
   final static float ENEMY_Z = -0.2;
@@ -57,7 +60,7 @@ class Enemy extends Person
     if(!moving)
     {
       float gamble = random(0,1);
-      if(gamble >= 0.99)
+      if(gamble <= moveProb)
       {
         PVector location = new PVector(random(0,2),random(0,2), position.z);
         PVector diff = location.copy().sub(position);
@@ -74,7 +77,19 @@ class Enemy extends Person
     }
   }
   
-
+  public Bullet getBullet()
+  {
+    Bullet out = null;
+    float gamble = random(0,1);
+    if(gamble <= shootProb)
+    {
+      PVector goHome = player.position.copy();
+      goHome.sub(position);
+      goHome.normalize();
+      out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR);
+    }
+    return out;
+  }
   
 }
 
@@ -115,7 +130,7 @@ class Player extends Person
     {
       PVector goHome = home.copy();
       goHome.sub(position);
-      goHome.mult(0.015 / (goHome.mag() + 0.1));
+      goHome.mult(0.015 / (goHome.mag() + 0.1)); //magic numbers
       position.add(goHome);
     }
     else
@@ -131,7 +146,7 @@ class Player extends Person
   
   public Bullet getBullet()
   {
-    PVector direction = new PVector(0,1);
+    PVector direction = new PVector(0,-1);
     return new Bullet(position.copy(), direction, BULLET_COLOR);
   }
 }

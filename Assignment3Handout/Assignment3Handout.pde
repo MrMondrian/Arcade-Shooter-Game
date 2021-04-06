@@ -33,6 +33,9 @@ void draw() {
   {
     enemies.get(i).print();
     enemies.get(i).update();
+    Bullet add = enemies.get(i).getBullet();
+    if(add != null)
+      bullets.add(add);
   }
   
   for(int i = 0; i < bullets.size(); i++)
