@@ -36,7 +36,7 @@ class KeyFrame
   {
     float x = _myLerp(start.x, end.x, t);
     float y = _myLerp(start.y, end.y, t);
-    return new PVector(x,y, PERSON_Z);
+    return new PVector(x,y, start.z);
   }
   
   boolean finished()

@@ -9,8 +9,8 @@ boolean down = false;
 final float MOVE_SPEED = 0.05;
 ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-final float PERSON_Z = -0.2;
-final PVector home = new PVector(1, 1.5, PERSON_Z);
+
+
 
 
 abstract class Person
@@ -38,12 +38,14 @@ abstract class Person
 
 class Enemy extends Person
 {
+  final static float ENEMY_Z = -0.2;
+  
   boolean moving;
   KeyFrame whereTo;
   public Enemy()
   {
     size = 0.2;
-    position = new PVector(random(0,2), random(0,0.5),PERSON_Z);
+    position = new PVector(random(0,2), random(0,0.5),ENEMY_Z);
 
     c = color(0,1,0);
     moving = false;
@@ -57,7 +59,7 @@ class Enemy extends Person
       float gamble = random(0,1);
       if(gamble >= 0.99)
       {
-        PVector location = new PVector(random(0,2),random(0,2), PERSON_Z);
+        PVector location = new PVector(random(0,2),random(0,2), position.z);
         PVector diff = location.copy().sub(position);
         float time = diff.mag() * 2000000000; //make this not a magic number
         whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
@@ -73,12 +75,18 @@ class Enemy extends Person
   }
   
 
+  
 }
 
 class Player extends Person
 {
+  final static float PLAYER_Z = -0.19;
+  final color BULLET_COLOR = color(0,0,1);
   
-  public Player(float _x, float _y)
+  
+  final PVector home = new PVector(1, 1.5, PLAYER_Z);
+  
+  public Player()
   {
      size = 0.15;
      position = home.copy();
@@ -120,4 +128,10 @@ class Player extends Person
     }
   }
   
+  
+  public Bullet getBullet()
+  {
+    PVector direction = new PVector(0,1);
+    return new Bullet(position.copy(), direction, BULLET_COLOR);
+  }
 }

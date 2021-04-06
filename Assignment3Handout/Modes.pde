@@ -39,6 +39,11 @@ void keyPressed()
      }
   }
   
+  if(key == KEY_SHOOT)
+  {
+    bullets.add(player.getBullet());
+  }
+  
   if(key == MOVE_RIGHT)
   {
     right = true;

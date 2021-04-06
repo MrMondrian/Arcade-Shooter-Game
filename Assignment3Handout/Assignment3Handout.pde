@@ -10,7 +10,7 @@ void setup() {
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
   
   world = new World();
-  player = new Player(1, 1);
+  player = new Player();
   enemies.add(new Enemy());
 }
 
@@ -33,6 +33,17 @@ void draw() {
   {
     enemies.get(i).print();
     enemies.get(i).update();
+  }
+  
+  for(int i = 0; i < bullets.size(); i++)
+  {
+    bullets.get(i).print();
+    bullets.get(i).update();
+    if(!bullets.get(i).alive)
+    {
+      bullets.remove(i);
+      i--;
+    }
   }
 
   endShape();
