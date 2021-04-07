@@ -10,17 +10,23 @@ void setup() {
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
   
   world = new World();
+  
   player = new Player();
-  enemies.add(new Enemy());
+  objects.add(player);
+  objects.add(new Enemy());
 }
 
-World world;
+
 void draw() {
   background(0,0,0);
   pollKeys();
-  player.update();
   fill(1,0,1);
   noStroke();
+  
+  //float gamble = random(0,1);
+  //if(gamble <= SPAWN_PROB)
+  //  objects.add(new Enemy());
+  
   beginShape(TRIANGLES);
   //vertex(0,0);
   //vertex(640,0);
@@ -28,23 +34,14 @@ void draw() {
   
   world.print();
   world.increment();
-  player.print();
-  for(int i = 0; i < enemies.size(); i++)
-  {
-    enemies.get(i).print();
-    enemies.get(i).update();
-    Bullet add = enemies.get(i).getBullet();
-    if(add != null)
-      bullets.add(add);
-  }
   
-  for(int i = 0; i < bullets.size(); i++)
+  for(int i = 0; i < objects.size(); i++)
   {
-    bullets.get(i).print();
-    bullets.get(i).update();
-    if(!bullets.get(i).alive)
+    objects.get(i).update();
+    objects.get(i).print();
+    if(!objects.get(i).alive)
     {
-      bullets.remove(i);
+      objects.remove(i);
       i--;
     }
   }
@@ -58,11 +55,11 @@ void pollKeys()
    moveX = 0;
    moveY = 0;
    if(right)
-     moveX += MOVE_SPEED;
+     moveX += PLAYER_MOVE_SPEED;
    if(left)
-     moveX -= MOVE_SPEED;
+     moveX -= PLAYER_MOVE_SPEED;
    if(up)
-     moveY -= MOVE_SPEED;
+     moveY -= PLAYER_MOVE_SPEED;
    if(down)
-     moveY += MOVE_SPEED;
+     moveY += PLAYER_MOVE_SPEED;
 }

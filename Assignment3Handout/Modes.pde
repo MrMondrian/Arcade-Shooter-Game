@@ -27,21 +27,17 @@ void keyPressed()
   {
      if(isOrtho)
      {
-       camera(1, 2.5, (0.5) / tan(PI*30.0 / 180.0), 1, 1.5, 0, 0, 1, 0);
-       frustum(-0.5, 0.5, -0.5, 0.5, 1, -1);
-       isOrtho = false;
+       setPerspective();
      }
      else
      {
-        camera(1, 1, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
-        ortho(-1,1,-1,1);
-        isOrtho = true;
+        setOrtho();
      }
   }
   
   if(key == KEY_SHOOT)
   {
-    bullets.add(player.getBullet());
+    objects.add(player.getBullet());
   }
   
   if(key == MOVE_RIGHT)

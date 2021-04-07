@@ -1,19 +1,16 @@
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
-class Bullet
+final float BULLET_SIZE = 0.02;
+final float BULLET_Z = -0.21;
+class Bullet extends Entity
 {
-  final static float BULLET_SIZE = 0.05;
-  final static float BULLET_Z = -0.21;
-  
-  PVector position;
   PVector direction;
-  boolean alive;
   float lookAngle;
   float vertexXDiff;
   float vertexYDiff;
   float c;
+  float speed;
   
-  public Bullet(PVector p, PVector d, color _c)
+  public Bullet(PVector p, PVector d, color _c, float s)
   {
     position = p;
     p.z = BULLET_Z;
@@ -22,12 +19,13 @@ class Bullet
     lookAngle = (float)Math.atan(direction.y / direction.x);
     vertexYDiff = sin(PI/6.0) * BULLET_SIZE;
     vertexXDiff = cos(PI/6.0) * BULLET_SIZE;
-    c = _c;
+    c = color(0,0,1);
+    speed = s;
   }
   
   public void update()
   {
-    PVector toAdd = direction.copy().mult(0.1);//fix magic number
+    PVector toAdd = direction.copy().mult(speed);//fix magic number
     position.add(toAdd);
     if(position.x < 0 || position.x > 2 || position.y < 0 || position.y > 2)
       alive = false;
@@ -36,10 +34,13 @@ class Bullet
   public void print()
   {
     fill(c);
-    //rotateZ(lookAngle);
+    println(c);
+    pushMatrix();
+    rotateZ(lookAngle);
     
-    vertex(position.x, position.y - BULLET_SIZE, position.z);
+    vertex(position.x, position.y - 3*BULLET_SIZE, position.z);
     vertex(position.x - vertexXDiff, position.y + vertexYDiff, position.z);
     vertex(position.x + vertexXDiff, position.y + vertexYDiff, position.z);
+    popMatrix();
   }
 }

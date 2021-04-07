@@ -6,14 +6,10 @@ boolean right = false;
 boolean left = false;
 boolean up = false;
 boolean down = false;
-final float MOVE_SPEED = 0.05;
-ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 
 
-
-
-abstract class Person
+abstract class Person extends Entity
 {
  
   float size;
@@ -36,9 +32,11 @@ abstract class Person
   }
 }
 
-float moveProb = 0.01; //processing wouldn't let me make these static in Enemy unless it was final
-float shootProb = 0.1;
+float MOVE_PROB = 0.01; //processing wouldn't let me make these static in Enemy unless it was final
+float SHOOT_PROB = 0.01;
 color ENEMY_BULLET_COLOR = color(0,1,0);
+float ENEMY_BULLET_SPEED = 0.02;
+float SPAWN_PROB = 0.003;
 class Enemy extends Person
 {
   final static float ENEMY_Z = -0.2;
@@ -53,6 +51,7 @@ class Enemy extends Person
     c = color(0,1,0);
     moving = false;
     whereTo = null;
+    alive = true;
   }
   
   public void update()
@@ -60,7 +59,7 @@ class Enemy extends Person
     if(!moving)
     {
       float gamble = random(0,1);
-      if(gamble <= moveProb)
+      if(gamble <= MOVE_PROB)
       {
         PVector location = new PVector(random(0,2),random(0,2), position.z);
         PVector diff = location.copy().sub(position);
@@ -75,29 +74,34 @@ class Enemy extends Person
       if(whereTo.finished())
         moving = false;
     }
+    
+    Bullet add = getBullet();
+    if(add != null)
+      objects.add(add);
   }
   
   public Bullet getBullet()
   {
     Bullet out = null;
     float gamble = random(0,1);
-    if(gamble <= shootProb)
+    if(gamble <= SHOOT_PROB)
     {
       PVector goHome = player.position.copy();
       goHome.sub(position);
       goHome.normalize();
-      out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR);
+      out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR, ENEMY_BULLET_SPEED);
     }
     return out;
   }
   
 }
 
+final float PLAYER_MOVE_SPEED = 0.05;
+final float PLAYER_Z = -0.19;
+final color PLAYER_BULLET_COLOR = color(0,0,255);
+final float PLAYER_BULLET_SPEED = 0.05;
 class Player extends Person
-{
-  final static float PLAYER_Z = -0.19;
-  final color BULLET_COLOR = color(0,0,1);
-  
+{  
   
   final PVector home = new PVector(1, 1.5, PLAYER_Z);
   
@@ -107,6 +111,7 @@ class Player extends Person
      position = home.copy();
 
      c = color(0,0,1);
+     alive = true;
   }
   
   public void print()
@@ -147,6 +152,6 @@ class Player extends Person
   public Bullet getBullet()
   {
     PVector direction = new PVector(0,-1);
-    return new Bullet(position.copy(), direction, BULLET_COLOR);
+    return new Bullet(position.copy(), direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED);
   }
 }

@@ -2,6 +2,7 @@ final float TILE_SIZE = 0.0625;
 final int WORLD_SIZE = 256;
 final float SCROLL_SPEED = 0.01;
 
+World world;
 class World
 {
   WorldSection w1;
