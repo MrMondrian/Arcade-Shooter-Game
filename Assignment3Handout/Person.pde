@@ -102,6 +102,15 @@ class Enemy extends Person
     return out;
   }
   
+  public void print()
+  {
+    pushMatrix();
+    translate(position.x, position.y, position.z);
+    scale(size);
+    super.print();
+    popMatrix();
+  }
+  
 }
 
 final float PLAYER_MOVE_SPEED = 0.05;

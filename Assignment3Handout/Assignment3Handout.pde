@@ -12,7 +12,7 @@ void setup() {
   
   player = new Player();
   objects.add(player);
- // objects.add(new Enemy());
+  objects.add(new Enemy());
 }
 
 

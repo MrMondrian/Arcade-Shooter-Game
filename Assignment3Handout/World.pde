@@ -48,7 +48,7 @@ class WorldSection
     int k = 0;
     for(float j = TILE_SIZE; j <6; j += 2 * TILE_SIZE)
     {
-      for(float i = TILE_SIZE - 2; i < 4; i += 2*TILE_SIZE)
+      for(float i = TILE_SIZE - 3; i < 3; i += 2*TILE_SIZE)
       {
         Tile t = new Tile(i, j);
         tiles[k] = t;
