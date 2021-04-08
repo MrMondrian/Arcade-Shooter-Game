@@ -24,23 +24,30 @@ class Bullet extends Entity
   }
   
   public void update()
-  {
-    PVector toAdd = direction.copy().mult(speed);//fix magic number
-    position.add(toAdd);
-    if(position.x < 0 || position.x > 2 || position.y < 0 || position.y > 2)
-      alive = false;
+   {
+    //PVector toAdd = direction.copy().mult(speed);//fix magic number
+    //position.add(toAdd);
+    //if(position.x < 0 || position.x > 2 || position.y < 0 || position.y > 2)
+    //  alive = false;
   }
   
   public void print()
   {
-    fill(c);
-    println(c);
+    fill(0,0,0);
     pushMatrix();
-    rotateZ(lookAngle);
-    
-    vertex(position.x, position.y - 3*BULLET_SIZE, position.z);
-    vertex(position.x - vertexXDiff, position.y + vertexYDiff, position.z);
-    vertex(position.x + vertexXDiff, position.y + vertexYDiff, position.z);
+    translate(position.x, position.y, position.x);
+    scale(0.5);
+    rotateZ(PI/6.0);
+   
+    println("PRINTING BULLET"); 
+    beginShape(TRIANGLES);
+    //vertex(position.x, position.y - 3*BULLET_SIZE, position.z);
+    //vertex(position.x - vertexXDiff, position.y + vertexYDiff, position.z);
+    //vertex(position.x + vertexXDiff, position.y + vertexYDiff, position.z);
+    vertex(0,-1,0);
+    vertex(-0.33,1,0);
+    vertex(0.33,1,0);
+    endShape();
     popMatrix();
   }
 }

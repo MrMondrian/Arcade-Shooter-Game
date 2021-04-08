@@ -18,16 +18,24 @@ abstract class Person extends Entity
   
     public void print()
   {
-         
     fill(c);
     //top face
-    vertex(position.x - size, position.y + size, position.z);
-    vertex(position.x - size, position.y - size, position.z);
-    vertex(position.x + size, position.y + size, position.z);
-    //topface
-    vertex(position.x - size, position.y - size, position.z);
-    vertex(position.x + size, position.y - size, position.z);
-    vertex(position.x + size, position.y + size, position.z); 
+    //vertex(position.x - size, position.y + size, position.z);
+    //vertex(position.x - size, position.y - size, position.z);
+    //vertex(position.x + size, position.y + size, position.z);
+    ////topface
+    //vertex(position.x - size, position.y - size, position.z);
+    //vertex(position.x + size, position.y - size, position.z);
+    //vertex(position.x + size, position.y + size, position.z); 
+    beginShape(TRIANGLES);
+    vertex(0,0,0);
+    vertex(0,2,0);
+    vertex(2,2,0);
+    
+    vertex(0,0,0);
+    vertex(2,2,0);
+    vertex(2,0,0);
+    endShape();
     
   }
 }
@@ -46,7 +54,7 @@ class Enemy extends Person
   public Enemy()
   {
     size = 0.2;
-    position = new PVector(random(0,2), random(0,0.5),ENEMY_Z);
+    position = new PVector(random(-1,1), random(0,-1),ENEMY_Z);
 
     c = color(0,1,0);
     moving = false;
@@ -61,7 +69,7 @@ class Enemy extends Person
       float gamble = random(0,1);
       if(gamble <= MOVE_PROB)
       {
-        PVector location = new PVector(random(0,2),random(0,2), position.z);
+        PVector location = new PVector(random(-1,1),random(-1,1), position.z);
         PVector diff = location.copy().sub(position);
         float time = diff.mag() * 2000000000; //make this not a magic number
         whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
@@ -103,11 +111,11 @@ final float PLAYER_BULLET_SPEED = 0.05;
 class Player extends Person
 {  
   
-  final PVector home = new PVector(1, 1.5, PLAYER_Z);
+  final PVector home = new PVector(0 - 0.15, 0.5 - 0.15, PLAYER_Z); //0.15
   
   public Player()
   {
-     size = 0.15;
+     size = 0.15; //magic number
      position = home.copy();
 
      c = color(0,0,1);
@@ -116,17 +124,21 @@ class Player extends Person
   
   public void print()
   {
-    //if(right)
-    //  rotateY(PI/6.0);
-    //if(left)
-    //  rotateY(-PI/6.0);
-    //if(up)
-    //  rotateX(PI/6.0);
-    //if(down)
-    //  rotateX(-PI/6.0);
-      
-    super.print(); 
+    pushMatrix();
     
+    translate(position.x, position.y, position.z);
+    scale(size);
+    if(right)
+      rotateY(PI/6.0);
+    if(left)
+      rotateY(-PI/6.0);
+    if(up)
+      rotateX(PI/6.0);
+    if(down)
+      rotateX(-PI/6.0);
+
+    super.print(); 
+    popMatrix();
   }
   
   public void update()
@@ -140,10 +152,10 @@ class Player extends Person
     }
     else
     {
-      if(position.x + moveX >= 0 && position.x + moveX <=2)
+      if(position.x + size + moveX >= -1 && position.x + size +  moveX <=1)
         position.x += moveX;
       
-      if(position.y + moveY >= 0 && position.y + moveY <=2)
+      if(position.y + size + moveY >= -1 && position.y + size + moveY <=1)
         position.y += moveY;
     }
   }
@@ -152,6 +164,8 @@ class Player extends Person
   public Bullet getBullet()
   {
     PVector direction = new PVector(0,-1);
-    return new Bullet(position.copy(), direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED);
+    PVector location = position.copy();
+    location.x += size;
+    return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED);
   }
 }

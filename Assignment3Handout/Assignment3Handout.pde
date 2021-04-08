@@ -4,8 +4,7 @@ void setup() {
   textureMode(NORMAL); // uses normalized 0..1 texture coords
   textureWrap(REPEAT);
   
-  camera(1, 1, (0.5) / tan(PI*30.0 / 180.0), 1,1, 0, 0, 1, 0);
-  ortho(-1,1,-1,1);
+  setOrtho();
   
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
   
@@ -13,7 +12,7 @@ void setup() {
   
   player = new Player();
   objects.add(player);
-  objects.add(new Enemy());
+ // objects.add(new Enemy());
 }
 
 
@@ -27,7 +26,6 @@ void draw() {
   //if(gamble <= SPAWN_PROB)
   //  objects.add(new Enemy());
   
-  beginShape(TRIANGLES);
   //vertex(0,0);
   //vertex(640,0);
   //vertex(320,640);
@@ -46,7 +44,6 @@ void draw() {
     }
   }
 
-  endShape();
   
 }
 
