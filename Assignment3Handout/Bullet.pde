@@ -16,7 +16,10 @@ class Bullet extends Entity
     p.z = BULLET_Z;
     direction = d;
     alive = true;
-    lookAngle = (float)Math.atan(-direction.y / direction.x) - PI/2.0;
+    lookAngle = -1 * ((float)Math.atan(-direction.y / direction.x) - PI/2.0);
+    if(direction.x < 0)
+      lookAngle += PI;
+    println(direction.y);
     vertexYDiff = sin(PI/6.0) * BULLET_SIZE;
     vertexXDiff = cos(PI/6.0) * BULLET_SIZE;
     c = color(0,0,1);
@@ -38,7 +41,6 @@ class Bullet extends Entity
     translate(position.x, position.y, position.z);
     scale(BULLET_SIZE);
     rotateZ(lookAngle);
-    println(position.x, position.y, position.z);
     beginShape(TRIANGLES);
     //vertex(position.x, position.y - 3*BULLET_SIZE, position.z);
     //vertex(position.x - vertexXDiff, position.y + vertexYDiff, position.z);
