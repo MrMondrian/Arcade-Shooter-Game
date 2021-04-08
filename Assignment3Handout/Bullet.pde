@@ -19,7 +19,6 @@ class Bullet extends Entity
     lookAngle = -1 * ((float)Math.atan(-direction.y / direction.x) - PI/2.0);
     if(direction.x < 0)
       lookAngle += PI;
-    println(direction.y);
     vertexYDiff = sin(PI/6.0) * BULLET_SIZE;
     vertexXDiff = cos(PI/6.0) * BULLET_SIZE;
     c = color(0,0,1);

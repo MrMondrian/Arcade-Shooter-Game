@@ -69,7 +69,7 @@ class Tile
 {
   float x;
   float y;
-  float z;
+  float tall;
   
   color c;
   
@@ -77,7 +77,7 @@ class Tile
   {
     x = _x;
     y = _y;
-    z = random(-1,1) * 0.1 - 0.5;
+    tall = random(0.5,2);
     c = color(random(0,1), random(0,1), random(0,1));
   }
   
@@ -85,45 +85,98 @@ class Tile
   {
     fill(c);
     float drawY = y + offset;
-    beginShape(TRIANGLES);
-    //left face
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE, -1);
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
     
-    //left face
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    drawTile(drawY);
     
-    //right face
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-    vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
+    //beginShape(TRIANGLES);
+    ////left face
+    //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    //vertex(x - TILE_SIZE, drawY - TILE_SIZE, -1);
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
     
-    //right face
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
-    vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
+    ////left face
+    //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
     
-    //front face
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-    //front face
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    ////right face
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    //vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
     
-    //top face
-    vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    //topface
-    vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
-    vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    endShape();
+    ////right face
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
+    //vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
     
+    ////front face
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    ////front face
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    
+    
+    ////drawTop(drawY);
+    
+    ////top face
+    //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
+    //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    ////topface
+    //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
+    //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
+    //endShape();
+    
+    
+  }
+  
+  void drawTile(float drawY)
+  {
+    
+     pushMatrix();
+     translate(x,drawY,-0.5);
+     scale(TILE_SIZE);
+     scale(1,1,tall);
+
+     beginShape(TRIANGLES);
+     
+     vertex(1,1,2);
+     vertex(1,1,0);
+     vertex(1,-1,0);
+     
+     vertex(1,1,2);
+     vertex(1,-1,0);
+     vertex(1,-1,2);
+     
+     vertex(-1,-1,2);
+     vertex(-1,-1,0);
+     vertex(-1,1,0);
+     
+     vertex(-1,-1,2);
+     vertex(-1,1,0);
+     vertex(-1,1,2);
+     
+     vertex(-1,1,2);
+     vertex(-1,1,0);
+     vertex(1,1,0);
+     
+     vertex(-1,1,2);
+     vertex(1,1,0);
+     vertex(1,1,2);
+     
+     vertex(-1,-1,2);
+     vertex(-1,1,2);
+     vertex(1,1,2);
+     
+     vertex(-1,-1,2);
+     vertex(1,1,2);
+     vertex(1,-1,2);
+     
+     endShape();
+     popMatrix();
   }
 }
