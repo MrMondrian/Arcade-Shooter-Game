@@ -114,7 +114,7 @@ class Enemy extends Person
 }
 
 final float PLAYER_MOVE_SPEED = 0.05;
-final float PLAYER_Z = -0.19;
+final float PLAYER_Z = 0;
 final color PLAYER_BULLET_COLOR = color(0,0,255);
 final float PLAYER_BULLET_SPEED = 0.05;
 class Player extends Person
