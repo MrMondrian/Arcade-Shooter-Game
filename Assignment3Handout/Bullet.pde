@@ -1,6 +1,6 @@
 
 final float BULLET_SIZE = 0.06;
-final float BULLET_Z = -0.21;
+final float BULLET_Z = -0.18;
 class Bullet extends Entity
 {
   PVector direction;
@@ -35,7 +35,7 @@ class Bullet extends Entity
   
   public void print()
   {
-    fill(0,0,0);
+    fill(c);
     pushMatrix();
     translate(position.x, position.y, position.z);
     scale(BULLET_SIZE);

@@ -15,6 +15,7 @@ abstract class Person extends Entity
   float size;
   PVector position;
   color c;
+  PImage appearance;
   
     public void print()
   {
@@ -28,6 +29,7 @@ abstract class Person extends Entity
     //vertex(position.x + size, position.y - size, position.z);
     //vertex(position.x + size, position.y + size, position.z); 
     beginShape(TRIANGLES);
+
     vertex(0,0,0);
     vertex(0,2,0);
     vertex(2,2,0);
@@ -45,12 +47,15 @@ float SHOOT_PROB = 0.01;
 color ENEMY_BULLET_COLOR = color(0,1,0);
 float ENEMY_BULLET_SPEED = 0.02;
 float SPAWN_PROB = 0.003;
+PImage enemyStill;
+final int FRAMES_PER_SHOT = 6;
 class Enemy extends Person
 {
   final static float ENEMY_Z = -0.2;
   
   boolean moving;
   KeyFrame whereTo;
+  int moveFrame;
   public Enemy()
   {
     size = 0.2;
@@ -60,6 +65,9 @@ class Enemy extends Person
     moving = false;
     whereTo = null;
     alive = true;
+    moveFrame = 0;
+    
+    appearance = enemyStill;
   }
   
   public void update()
@@ -79,8 +87,12 @@ class Enemy extends Person
     else
     {
       position = whereTo.getPosition();
+      moveFrame++;
       if(whereTo.finished())
+      {
         moving = false;
+        moveFrame = 0;
+      }
     }
     
     Bullet add = getBullet();
@@ -107,8 +119,55 @@ class Enemy extends Person
     pushMatrix();
     translate(position.x, position.y, position.z);
     scale(size);
-    super.print();
+    
+    if(doTextures)
+    {
+      if(!moving)
+        printTextureStill();
+      else
+      {
+        int whichShot = moveFrame / FRAMES_PER_SHOT;
+        printTextureMove(whichShot);
+      }
+    }
+    else
+    {  
+      super.print();
+    }
     popMatrix();
+  }
+  
+  //https://forum.processing.org/two/discussion/14568/how-do-i-let-the-tiles-change-color-if-my-goomba-stands-on-them
+  public void printTextureStill()
+  {
+    beginShape(TRIANGLES);
+    if(doTextures)
+      texture(appearance);
+    vertex(0,0,0,0,0.5);
+    vertex(0,2,0,0,0.625);
+    vertex(2,2,0,0.125,0.625);
+    
+    vertex(0,0,0,0,0.5);
+    vertex(2,2,0,0.125,0.625);
+    vertex(2,0,0,0.125,0.5);
+    endShape(); 
+  }
+  
+  public void printTextureMove(int frame)
+  {
+    frame = frame % 8;
+    float offset = 0.125 * frame;
+    beginShape(TRIANGLES);
+    if(doTextures)
+      texture(appearance);
+    vertex(0,0,0,0 + offset,0.25);
+    vertex(0,2,0,0 + offset,0.375);
+    vertex(2,2,0,0.125 + offset,0.375);
+    
+    vertex(0,0,0,0 + offset,0.25);
+    vertex(2,2,0,0.125 + offset,0.375);
+    vertex(2,0,0,0.125 + offset,0.25);
+    endShape(); 
   }
   
 }

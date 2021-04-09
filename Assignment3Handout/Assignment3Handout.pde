@@ -12,6 +12,7 @@ void setup() {
   GrassSide = loadImage("GrassSide.jpg");
   SnowTop = loadImage("SnowTop.jpg");
   SnowSide = loadImage("SnowSide.png");
+  enemyStill = loadImage("Goomba.png");
   
   world = new World();
   
