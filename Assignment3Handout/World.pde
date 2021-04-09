@@ -65,11 +65,19 @@ class WorldSection
   
 }
 
+
+PImage GrassTop;
+PImage GrassSide;
+PImage SnowTop;
+PImage SnowSide;
 class Tile
 {
   float x;
   float y;
   float tall;
+  
+  PImage top;
+  PImage side;
   
   color c;
   
@@ -79,6 +87,18 @@ class Tile
     y = _y;
     tall = random(0.5,2);
     c = color(random(0,1), random(0,1), random(0,1));
+    
+    float gamble = random(0,1);
+    if(gamble < 0.5)
+    {
+      top = GrassTop;
+      side = GrassSide;
+    }
+    else
+    {
+      top = SnowTop;
+      side = SnowSide;
+    }
   }
   
   //public void print(float offset)
@@ -147,37 +167,47 @@ class Tile
 
      beginShape(TRIANGLES);
      
-     vertex(1,1,2);
-     vertex(1,1,0);
-     vertex(1,-1,0);
+     //if(doTextures)
+     if(doTextures)
+       texture(side);
+       //right side
+     vertex(1,1,2,0,0);
+     vertex(1,1,0,0,1);
+     vertex(1,-1,0,1,1);
      
-     vertex(1,1,2);
-     vertex(1,-1,0);
-     vertex(1,-1,2);
+     vertex(1,1,2,0,0);
+     vertex(1,-1,0,1,1);
+     vertex(1,-1,2,1,0);
      
-     vertex(-1,-1,2);
-     vertex(-1,-1,0);
-     vertex(-1,1,0);
+     //left side
+     vertex(-1,-1,2,0,0);
+     vertex(-1,-1,0,0,1);
+     vertex(-1,1,0,1,1);
      
-     vertex(-1,-1,2);
-     vertex(-1,1,0);
-     vertex(-1,1,2);
+     vertex(-1,-1,2,0,0);
+     vertex(-1,1,0,1,1);
+     vertex(-1,1,2,1,0);
+     //front side
+     vertex(-1,1,2,0,0);
+     vertex(-1,1,0,0,1);
+     vertex(1,1,0,1,1);
      
-     vertex(-1,1,2);
-     vertex(-1,1,0);
-     vertex(1,1,0);
+     vertex(-1,1,2,0,0);
+     vertex(1,1,0,1,1);
+     vertex(1,1,2,1,0);
+     endShape();
      
-     vertex(-1,1,2);
-     vertex(1,1,0);
-     vertex(1,1,2);
+     beginShape(TRIANGLES);
+     if(doTextures)
+       texture(top);
+     //top side
+     vertex(-1,-1,2,0,0);
+     vertex(-1,1,2,0,1);
+     vertex(1,1,2,1,1);
      
-     vertex(-1,-1,2);
-     vertex(-1,1,2);
-     vertex(1,1,2);
-     
-     vertex(-1,-1,2);
-     vertex(1,1,2);
-     vertex(1,-1,2);
+     vertex(-1,-1,2,0,0);
+     vertex(1,1,2,1,1);
+     vertex(1,-1,2,1,0);
      
      endShape();
      popMatrix();

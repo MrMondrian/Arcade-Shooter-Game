@@ -56,6 +56,12 @@ void keyPressed()
   {
     up = true;
   }
+  
+  if(key == KEY_TEX)
+  {
+    doTextures = !doTextures;
+    println(doTextures);
+  }
     
 }
 

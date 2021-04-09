@@ -7,12 +7,19 @@ void setup() {
   setOrtho();
   
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
+
+  GrassTop = loadImage("GrassTop.png");
+  GrassSide = loadImage("GrassSide.jpg");
+  SnowTop = loadImage("SnowTop.jpg");
+  SnowSide = loadImage("SnowSide.png");
   
   world = new World();
   
   player = new Player();
   objects.add(player);
   objects.add(new Enemy());
+  
+   
 }
 
 
