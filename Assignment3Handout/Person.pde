@@ -56,6 +56,7 @@ class Enemy extends Person
   boolean moving;
   KeyFrame whereTo;
   int moveFrame;
+  boolean movingRight;
   public Enemy()
   {
     size = 0.2;
@@ -68,6 +69,7 @@ class Enemy extends Person
     moveFrame = 0;
     
     appearance = enemyStill;
+    movingRight = true;
   }
   
   public void update()
@@ -77,11 +79,15 @@ class Enemy extends Person
       float gamble = random(0,1);
       if(gamble <= MOVE_PROB)
       {
-        PVector location = new PVector(random(-1,1),random(-1,1), position.z);
+        PVector location = new PVector(random(-0.8,0.8),random(-0.9,0.6), position.z);
         PVector diff = location.copy().sub(position);
         float time = diff.mag() * 2000000000; //make this not a magic number
         whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
         moving = true;
+        if(location.x > 0)
+          movingRight = true;
+        else
+          movingRight = false;
       }
     }
     else
@@ -157,16 +163,21 @@ class Enemy extends Person
   {
     frame = frame % 8;
     float offset = 0.125 * frame;
+    int xCorrect;
+    if(movingRight)
+      xCorrect = 1;
+    else
+      xCorrect = -1;
     beginShape(TRIANGLES);
     if(doTextures)
       texture(appearance);
-    vertex(0,0,0,0 + offset,0.25);
-    vertex(0,2,0,0 + offset,0.375);
-    vertex(2,2,0,0.125 + offset,0.375);
+    vertex(0,0,0,xCorrect *(0 + offset),0.25);
+    vertex(0,2,0,xCorrect *(0 + offset),0.375);
+    vertex(2,2,0,xCorrect *(0.125 + offset),0.375);
     
-    vertex(0,0,0,0 + offset,0.25);
-    vertex(2,2,0,0.125 + offset,0.375);
-    vertex(2,0,0,0.125 + offset,0.25);
+    vertex(0,0,0,xCorrect *(0 + offset),0.25);
+    vertex(2,2,0,xCorrect *(0.125 + offset),0.375);
+    vertex(2,0,0,xCorrect *(0.125 + offset),0.25);
     endShape(); 
   }
   
