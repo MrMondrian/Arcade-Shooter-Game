@@ -84,7 +84,7 @@ class Enemy extends Person
         float time = diff.mag() * 2000000000; //make this not a magic number
         whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
         moving = true;
-        if(location.x > 0)
+        if(diff.x > 0)
           movingRight = true;
         else
           movingRight = false;
@@ -162,22 +162,33 @@ class Enemy extends Person
   public void printTextureMove(int frame)
   {
     frame = frame % 8;
-    float offset = 0.125 * frame;
-    int xCorrect;
+    float xOffset = 0.125 * frame;
+
+    float yOffset;
     if(movingRight)
-      xCorrect = 1;
+      yOffset = 0.25;
     else
-      xCorrect = -1;
+      yOffset = 0.75;
+    
+    float lowX = xOffset + 0.002 * frame;
+    float highX = 0.125 + xOffset + 0.002 * frame - 0.005;
+    
+    float lowY = yOffset;
+    float highY = yOffset + 0.125;
+    
     beginShape(TRIANGLES);
     if(doTextures)
       texture(appearance);
-    vertex(0,0,0,xCorrect *(0 + offset),0.25);
-    vertex(0,2,0,xCorrect *(0 + offset),0.375);
-    vertex(2,2,0,xCorrect *(0.125 + offset),0.375);
     
-    vertex(0,0,0,xCorrect *(0 + offset),0.25);
-    vertex(2,2,0,xCorrect *(0.125 + offset),0.375);
-    vertex(2,0,0,xCorrect *(0.125 + offset),0.25);
+    
+    
+    vertex(0,0,0,lowX,lowY);
+    vertex(0,2,0,lowX,highY);
+    vertex(2,2,0,highX,highY);
+    
+    vertex(0,0,0,lowX,lowY);
+    vertex(2,2,0,highX,highY);
+    vertex(2,0,0,highX,lowY);
     endShape(); 
   }
   
