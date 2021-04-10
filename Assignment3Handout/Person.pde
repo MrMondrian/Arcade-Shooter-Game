@@ -30,13 +30,13 @@ abstract class Person extends Entity
     //vertex(position.x + size, position.y + size, position.z); 
     beginShape(TRIANGLES);
 
-    vertex(0,0,0);
-    vertex(0,2,0);
-    vertex(2,2,0);
+    vertex(-1,-1,0);
+    vertex(-1,1,0);
+    vertex(1,1,0);
     
-    vertex(0,0,0);
-    vertex(2,2,0);
-    vertex(2,0,0);
+    vertex(-1,-1,0);
+    vertex(1,1,0);
+    vertex(1,-1,0);
     endShape();
     
   }
@@ -47,11 +47,11 @@ float SHOOT_PROB = 0.01;
 color ENEMY_BULLET_COLOR = color(0,1,0);
 float ENEMY_BULLET_SPEED = 0.02;
 float SPAWN_PROB = 0.003;
-PImage enemyStill;
+PImage EnemyTexture;
 final int FRAMES_PER_SHOT = 6;
+final float ENEMY_Z = 0.1;
 class Enemy extends Person
 {
-  final static float ENEMY_Z = -0.2;
   
   boolean moving;
   KeyFrame whereTo;
@@ -68,7 +68,7 @@ class Enemy extends Person
     alive = true;
     moveFrame = 0;
     
-    appearance = enemyStill;
+    appearance = EnemyTexture;
     movingRight = true;
   }
   
@@ -149,13 +149,13 @@ class Enemy extends Person
     beginShape(TRIANGLES);
     if(doTextures)
       texture(appearance);
-    vertex(0,0,0,0,0.5);
-    vertex(0,2,0,0,0.625);
-    vertex(2,2,0,0.125,0.625);
+    vertex(-1,-1,0,0,0.5);
+    vertex(-1,1,0,0,0.625);
+    vertex(1,1,0,0.125,0.625);
     
-    vertex(0,0,0,0,0.5);
-    vertex(2,2,0,0.125,0.625);
-    vertex(2,0,0,0.125,0.5);
+    vertex(-1,-1,0,0,0.5);
+    vertex(1,1,0,0.125,0.625);
+    vertex(1,-1,0,0.125,0.5);
     endShape(); 
   }
   
@@ -170,8 +170,8 @@ class Enemy extends Person
     else
       yOffset = 0.75;
     
-    float lowX = xOffset + 0.002 * frame;
-    float highX = 0.125 + xOffset + 0.002 * frame - 0.005;
+    float lowX = xOffset + 0.003 * frame;
+    float highX = 0.125 + xOffset + 0.003 * frame - 0.01;
     
     float lowY = yOffset;
     float highY = yOffset + 0.125;
@@ -182,13 +182,13 @@ class Enemy extends Person
     
     
     
-    vertex(0,0,0,lowX,lowY);
-    vertex(0,2,0,lowX,highY);
-    vertex(2,2,0,highX,highY);
+    vertex(-1,-1,0,lowX,lowY);
+    vertex(-1,1,0,lowX,highY);
+    vertex(1,1,0,highX,highY);
     
-    vertex(0,0,0,lowX,lowY);
-    vertex(2,2,0,highX,highY);
-    vertex(2,0,0,highX,lowY);
+    vertex(-1,-1,0,lowX,lowY);
+    vertex(1,1,0,highX,highY);
+    vertex(1,-1,0,highX,lowY);
     endShape(); 
   }
   
@@ -198,10 +198,11 @@ final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;
 final color PLAYER_BULLET_COLOR = color(0,0,255);
 final float PLAYER_BULLET_SPEED = 0.05;
+PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
 class Player extends Person
 {  
   
-  final PVector home = new PVector(0 - 0.15, 0.5 - 0.15, PLAYER_Z); //0.15
+  final PVector home = new PVector(0, 0.5, PLAYER_Z); //0.15
   
   public Player()
   {
@@ -210,6 +211,7 @@ class Player extends Person
 
      c = color(0,0,1);
      alive = true;
+     appearance = PlayerTexture;
   }
   
   public void print()
@@ -226,8 +228,21 @@ class Player extends Person
       rotateX(PI/6.0);
     if(down)
       rotateX(-PI/6.0);
-
-    super.print(); 
+    
+    fill(c);
+    
+    beginShape(TRIANGLES);
+    if(doTextures)
+      texture(appearance);
+    vertex(-1,-1,0,0,0);
+    vertex(-1,1,0,0,1);
+    vertex(1,1,0,1,1);
+    
+    vertex(-1,-1,0,0,0);
+    vertex(1,1,0,1,1);
+    vertex(1,-1,0,1,0);
+    endShape(); 
+    
     popMatrix();
   }
   
@@ -255,7 +270,6 @@ class Player extends Person
   {
     PVector direction = new PVector(0,-1);
     PVector location = position.copy();
-    location.x += size;
     return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED);
   }
 }

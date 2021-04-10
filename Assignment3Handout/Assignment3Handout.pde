@@ -12,7 +12,8 @@ void setup() {
   GrassSide = loadImage("GrassSide.jpg");
   SnowTop = loadImage("SnowTop.jpg");
   SnowSide = loadImage("SnowSide.png");
-  enemyStill = loadImage("Goomba.png");
+  EnemyTexture = loadImage("Goomba.png");
+  PlayerTexture = loadImage("SpaceShip.png");
   
   world = new World();
   
@@ -30,9 +31,9 @@ void draw() {
   fill(1,0,1);
   noStroke();
   
-  //float gamble = random(0,1);
-  //if(gamble <= SPAWN_PROB)
-  //  objects.add(new Enemy());
+  float gamble = random(0,1);
+  if(gamble <= SPAWN_PROB)
+    objects.add(new Enemy());
   
   //vertex(0,0);
   //vertex(640,0);
