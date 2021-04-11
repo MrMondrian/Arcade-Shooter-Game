@@ -1,5 +1,5 @@
-final float PARTICLE_GRAVITY = -0.0098;
-final float LIFE_PER_FRAME = 0.03;
+final float PARTICLE_GRAVITY = -0.002;
+final float LIFE_PER_FRAME = 0.001;
 final float PARTICLE_SIZE = 0.01;
 
 class Particle
@@ -17,8 +17,8 @@ class Particle
   {
     alive = true;
     position = p;
-    direction = new PVector(random(-1,1),random(-1,1),0);
-    speed = random(0,0.3);
+    direction = new PVector(random(-1,1),random(-1,1),random(-1,1));
+    speed = random(0,0.1);
     direction.mult(speed);
     life = 1;
     angle = random(0,PI/2);
@@ -29,7 +29,7 @@ class Particle
   public void update()
   {
     position.add(direction);
-    direction.mult(0.9);
+    direction.mult(0.96);
     direction.z += PARTICLE_GRAVITY;
     life -= LIFE_PER_FRAME;
     if(life <= 0)
@@ -93,7 +93,6 @@ class ParticleSystem
     
     for(int i = 0; i < particles.size(); i++)
     {
-       println(i, particles.get(i).position.x);
        particles.get(i).print();
     }
   }
