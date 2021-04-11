@@ -8,6 +8,9 @@ void setup() {
   
   setupPOGL(); // setup our hack to ProcesingOpenGL to let us modify the projection matrix manually
 
+  ENEMY_BULLET_COLOR = color(1,0,0);
+  PLAYER_BULLET_COLOR = color(0,0,1);
+
   GrassTop = loadImage("GrassTop.png");
   GrassSide = loadImage("GrassSide.jpg");
   SnowTop = loadImage("SnowTop.jpg");
@@ -42,7 +45,7 @@ void draw() {
   world.print();
   world.increment();
   
-  for(int i = 0; i < objects.size(); i++)
+  for(int i = objects.size() - 1; i >= 0; i--)
   {
     objects.get(i).update();
     objects.get(i).print();

@@ -44,12 +44,12 @@ abstract class Person extends Entity
 
 float MOVE_PROB = 0.01; //processing wouldn't let me make these static in Enemy unless it was final
 float SHOOT_PROB = 0.01;
-color ENEMY_BULLET_COLOR = color(0,1,0);
+color ENEMY_BULLET_COLOR;
 float ENEMY_BULLET_SPEED = 0.02;
 float SPAWN_PROB = 0.003;
 PImage EnemyTexture;
 final int FRAMES_PER_SHOT = 6;
-final float ENEMY_Z = 0.1;
+final float ENEMY_Z = -0.2;
 class Enemy extends Person
 {
   
@@ -62,7 +62,7 @@ class Enemy extends Person
     size = 0.2;
     position = new PVector(random(-1,1), random(0,-1),ENEMY_Z);
 
-    c = color(0,1,0);
+    c = color(1,0,0); //make no constant
     moving = false;
     whereTo = null;
     alive = true;
@@ -70,6 +70,8 @@ class Enemy extends Person
     
     appearance = EnemyTexture;
     movingRight = true;
+    
+    type = EntityType.ENEMY_TYPE;
   }
   
   public void update()
@@ -115,7 +117,7 @@ class Enemy extends Person
       PVector goHome = player.position.copy();
       goHome.sub(position);
       goHome.normalize();
-      out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR, ENEMY_BULLET_SPEED);
+      out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR, ENEMY_BULLET_SPEED, EntityType.ENEMY_TYPE);
     }
     return out;
   }
@@ -196,7 +198,7 @@ class Enemy extends Person
 
 final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;
-final color PLAYER_BULLET_COLOR = color(0,0,255);
+color PLAYER_BULLET_COLOR;
 final float PLAYER_BULLET_SPEED = 0.05;
 PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
 class Player extends Person
@@ -212,6 +214,8 @@ class Player extends Person
      c = color(0,0,1);
      alive = true;
      appearance = PlayerTexture;
+     
+     type = EntityType.PLAYER_TYPE;
   }
   
   public void print()
@@ -270,6 +274,6 @@ class Player extends Person
   {
     PVector direction = new PVector(0,-1);
     PVector location = position.copy();
-    return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED);
+    return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED, EntityType.PLAYER_TYPE);
   }
 }

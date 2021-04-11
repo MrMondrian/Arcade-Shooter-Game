@@ -1,16 +1,16 @@
 
 final float BULLET_SIZE = 0.06;
-final float BULLET_Z = -0.18;
+final float BULLET_Z = 0.1;
 class Bullet extends Entity
 {
   PVector direction;
   float lookAngle;
   float vertexXDiff;
   float vertexYDiff;
-  float c;
+  color c;
   float speed;
   
-  public Bullet(PVector p, PVector d, color _c, float s)
+  public Bullet(PVector p, PVector d, color _c, float s, EntityType t)
   {
     position = p;
     p.z = BULLET_Z;
@@ -21,8 +21,9 @@ class Bullet extends Entity
       lookAngle += PI;
     vertexYDiff = sin(PI/6.0) * BULLET_SIZE;
     vertexXDiff = cos(PI/6.0) * BULLET_SIZE;
-    c = color(0,0,1);
+    c = _c;
     speed = s;
+    type = t;
   }
   
   public void update()
