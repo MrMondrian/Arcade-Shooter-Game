@@ -34,9 +34,9 @@ void draw() {
   fill(1,0,1);
   noStroke();
   
-  float gamble = random(0,1);
-  if(gamble <= SPAWN_PROB)
-    objects.add(new Enemy());
+  //float gamble = random(0,1);
+  //if(gamble <= SPAWN_PROB)
+  //  objects.add(new Enemy());
   
   //vertex(0,0);
   //vertex(640,0);
@@ -44,6 +44,15 @@ void draw() {
   
   world.print();
   world.increment();
+  
+  for(int i = 0; i < objects.size(); i++)
+  {
+    for(int j = i + 1; j < objects.size(); j++)
+    {
+      objects.get(i).collide(objects.get(j));
+    }
+  }
+ 
   
   for(int i = objects.size() - 1; i >= 0; i--)
   {

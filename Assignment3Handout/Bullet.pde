@@ -1,6 +1,6 @@
 
 final float BULLET_SIZE = 0.06;
-final float BULLET_Z = 0.1;
+final float BULLET_Z = 0; //0.1;
 class Bullet extends Entity
 {
   PVector direction;
@@ -24,6 +24,7 @@ class Bullet extends Entity
     c = _c;
     speed = s;
     type = t;
+    size = BULLET_SIZE;
   }
   
   public void update()
@@ -39,7 +40,7 @@ class Bullet extends Entity
     fill(c);
     pushMatrix();
     translate(position.x, position.y, position.z);
-    scale(BULLET_SIZE);
+    scale(size);
     rotateZ(lookAngle);
     beginShape(TRIANGLES);
     //vertex(position.x, position.y - 3*BULLET_SIZE, position.z);
@@ -50,5 +51,10 @@ class Bullet extends Entity
     vertex(0.33,1,0);
     endShape();
     popMatrix();
+  }
+  
+  public void takeHit(Entity other)
+  {
+    alive = false; //same result regardless of what it hits. Always dies
   }
 }

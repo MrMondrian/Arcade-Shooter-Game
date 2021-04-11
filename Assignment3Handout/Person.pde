@@ -12,10 +12,9 @@ boolean down = false;
 abstract class Person extends Entity
 {
  
-  float size;
-  PVector position;
   color c;
   PImage appearance;
+  float health;
   
     public void print()
   {
@@ -49,7 +48,7 @@ float ENEMY_BULLET_SPEED = 0.02;
 float SPAWN_PROB = 0.003;
 PImage EnemyTexture;
 final int FRAMES_PER_SHOT = 6;
-final float ENEMY_Z = -0.2;
+final float ENEMY_Z = 0;//-0.2;
 class Enemy extends Person
 {
   
@@ -72,6 +71,8 @@ class Enemy extends Person
     movingRight = true;
     
     type = EntityType.ENEMY_TYPE;
+    
+    health = 1;
   }
   
   public void update()
@@ -194,6 +195,21 @@ class Enemy extends Person
     endShape(); 
   }
   
+  public void takeHit(Entity other)
+  {
+    if(other instanceof Bullet)
+    {
+      health -= 0.5;
+      if(health <= 0)
+        alive = false;
+    }
+    else if(other instanceof Player)
+    {
+      health = 0;
+      alive = false;
+    }
+  }
+  
 }
 
 final float PLAYER_MOVE_SPEED = 0.05;
@@ -216,6 +232,8 @@ class Player extends Person
      appearance = PlayerTexture;
      
      type = EntityType.PLAYER_TYPE;
+     
+     health = 1;
   }
   
   public void print()
@@ -275,5 +293,12 @@ class Player extends Person
     PVector direction = new PVector(0,-1);
     PVector location = position.copy();
     return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED, EntityType.PLAYER_TYPE);
+  }
+  
+  public void takeHit(Entity other)
+  {
+    //smame result if it's a bullet or an enemy, instant death
+    health = 0;
+    alive = false;
   }
 }
