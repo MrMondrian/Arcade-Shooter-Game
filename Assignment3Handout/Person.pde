@@ -58,7 +58,7 @@ class Enemy extends Person
   boolean movingRight;
   public Enemy()
   {
-    size = 0.2;
+    size = 0.15;
     position = new PVector(random(-1,1), random(0,-1),ENEMY_Z);
 
     c = color(1,0,0); //make no constant
@@ -201,12 +201,16 @@ class Enemy extends Person
     {
       health -= 0.5;
       if(health <= 0)
-        alive = false;
+      { 
+         alive = false;
+         particleSystems.add(new ParticleSystem(position));
+      }
     }
     else if(other instanceof Player)
     {
       health = 0;
       alive = false;
+      particleSystems.add(new ParticleSystem(position));
     }
   }
   
@@ -279,10 +283,10 @@ class Player extends Person
     }
     else
     {
-      if(position.x + size + moveX >= -1 && position.x + size +  moveX <=1)
+      if(position.x - size/2.0 + moveX >= -1 && position.x + size/2.0 +  moveX <=1)
         position.x += moveX;
       
-      if(position.y + size + moveY >= -1 && position.y + size + moveY <=1)
+      if(position.y - size/2.0 + moveY >= -1 && position.y + size/2.0 + moveY <=1)
         position.y += moveY;
     }
   }
@@ -300,5 +304,6 @@ class Player extends Person
     //smame result if it's a bullet or an enemy, instant death
     health = 0;
     alive = false;
+    particleSystems.add(new ParticleSystem(position));
   }
 }

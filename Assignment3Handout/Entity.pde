@@ -1,4 +1,4 @@
-ArrayList<Entity> objects = new ArrayList<Entity>();
+
 
 abstract class Entity
 {
@@ -13,7 +13,6 @@ abstract class Entity
    
    public void collide(Entity other)
    {
-     println(other.type, other.position, other.size);
      if(type != other.type && position.dist(other.position) <= size + other.size)
      {
        takeHit(other);

@@ -62,6 +62,9 @@ void keyPressed()
     doTextures = !doTextures;
     println(doTextures);
   }
+  
+  if(key == KEY_COLLISION)
+    doCollision = !doCollision;
     
 }
 

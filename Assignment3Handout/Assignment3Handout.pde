@@ -1,3 +1,6 @@
+ArrayList<Entity> objects = new ArrayList<Entity>();
+ArrayList<ParticleSystem> particleSystems = new ArrayList<ParticleSystem>();
+
 void setup() {
   size(640, 640, P3D);
   colorMode(RGB, 1.0f);
@@ -34,9 +37,9 @@ void draw() {
   fill(1,0,1);
   noStroke();
   
-  //float gamble = random(0,1);
-  //if(gamble <= SPAWN_PROB)
-  //  objects.add(new Enemy());
+  float gamble = random(0,1);
+  if(gamble <= SPAWN_PROB)
+    objects.add(new Enemy());
   
   //vertex(0,0);
   //vertex(640,0);
@@ -45,19 +48,22 @@ void draw() {
   world.print();
   world.increment();
   
-  for(int i = 0; i < objects.size(); i++)
+  if(doCollision)
   {
-    for(int j = i + 1; j < objects.size(); j++)
+    for(int i = 0; i < objects.size(); i++)
     {
-      objects.get(i).collide(objects.get(j));
+      for(int j = i + 1; j < objects.size(); j++)
+      {
+        objects.get(i).collide(objects.get(j));
+      }
     }
   }
  
   
   for(int i = objects.size() - 1; i >= 0; i--)
   {
-    objects.get(i).update();
     objects.get(i).print();
+    objects.get(i).update();
     if(!objects.get(i).alive)
     {
       objects.remove(i);
@@ -65,7 +71,18 @@ void draw() {
     }
   }
 
-  
+  for(int i = 0; i < particleSystems.size(); i++)
+  {
+    println("HERE");
+    particleSystems.get(i).print();
+    particleSystems.get(i).update();
+    if(!particleSystems.get(i).alive)
+    {
+      particleSystems.remove(i);
+      i--;
+    }
+    
+  }
 }
 
 void pollKeys()
