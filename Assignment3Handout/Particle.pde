@@ -1,6 +1,6 @@
-final float PARTICLE_GRAVITY = 0.098;
-final float LIFE_PER_FRAME = 0.000;
-final float PARTICLE_SIZE = 0.1;
+final float PARTICLE_GRAVITY = -0.0098;
+final float LIFE_PER_FRAME = 0.03;
+final float PARTICLE_SIZE = 0.01;
 
 class Particle
 {
@@ -15,10 +15,10 @@ class Particle
   
   public Particle(PVector p)
   {
+    alive = true;
     position = p;
-    direction = new PVector(random(0,1),random(0,1),random(0,1));
-    direction.normalize();
-    speed = 0;//random(0,0.1);
+    direction = new PVector(random(-1,1),random(-1,1),0);
+    speed = random(0,0.3);
     direction.mult(speed);
     life = 1;
     angle = random(0,PI/2);
@@ -28,7 +28,8 @@ class Particle
   
   public void update()
   {
-    //position.add(direction);
+    position.add(direction);
+    direction.mult(0.9);
     direction.z += PARTICLE_GRAVITY;
     life -= LIFE_PER_FRAME;
     if(life <= 0)
@@ -39,8 +40,8 @@ class Particle
   {
     pushMatrix();
     translate(position.x, position.y, position.z);
-    //scale(PARTICLE_SIZE);
-    //rotate(angle);
+    scale(PARTICLE_SIZE);
+    rotate(angle);
     fill(c);
     beginShape(QUADS);
     vertex(-1,-1,0);
@@ -67,7 +68,7 @@ class ParticleSystem
     particles = new ArrayList<Particle>();
     for(int i = 0; i < 100; i++)
     {
-      particles.add(new Particle(position));
+      particles.add(new Particle(position.copy()));
     }
     alive = true;
   }
@@ -89,7 +90,11 @@ class ParticleSystem
   
   public void print()
   {
+    
     for(int i = 0; i < particles.size(); i++)
-      particles.get(i).print();
+    {
+       println(i, particles.get(i).position.x);
+       particles.get(i).print();
+    }
   }
 }

@@ -70,10 +70,8 @@ void draw() {
       i--;
     }
   }
-
   for(int i = 0; i < particleSystems.size(); i++)
   {
-    println("HERE");
     particleSystems.get(i).print();
     particleSystems.get(i).update();
     if(!particleSystems.get(i).alive)

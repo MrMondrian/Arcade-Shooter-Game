@@ -203,14 +203,14 @@ class Enemy extends Person
       if(health <= 0)
       { 
          alive = false;
-         particleSystems.add(new ParticleSystem(position));
+         particleSystems.add(new ParticleSystem(position.copy()));
       }
     }
     else if(other instanceof Player)
     {
       health = 0;
       alive = false;
-      particleSystems.add(new ParticleSystem(position));
+      particleSystems.add(new ParticleSystem(position.copy()));
     }
   }
   
@@ -304,6 +304,6 @@ class Player extends Person
     //smame result if it's a bullet or an enemy, instant death
     health = 0;
     alive = false;
-    particleSystems.add(new ParticleSystem(position));
+    particleSystems.add(new ParticleSystem(position.copy()));
   }
 }
