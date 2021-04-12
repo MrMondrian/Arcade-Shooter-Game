@@ -197,20 +197,19 @@ class Enemy extends Person
   
   public void takeHit(Entity other)
   {
+    particleSystems.add(new ParticleSystem(position.copy()));
     if(other instanceof Bullet)
     {
       health -= 0.5;
       if(health <= 0)
       { 
-         alive = false;
-         particleSystems.add(new ParticleSystem(position.copy()));
+         alive = false; 
       }
     }
     else if(other instanceof Player)
     {
       health = 0;
       alive = false;
-      particleSystems.add(new ParticleSystem(position.copy()));
     }
   }
   

@@ -25,7 +25,11 @@ void keyPressed()
 {
   if(key == KEY_VIEW)
   {
-     if(isOrtho)
+     if(doBonus)
+     {
+       startBonus();
+     }
+     else if(isOrtho)
      {
        setPerspective();
      }
@@ -65,6 +69,9 @@ void keyPressed()
   
   if(key == KEY_COLLISION)
     doCollision = !doCollision;
+    
+  if(key == KEY_BONUS)
+    doBonus = !doBonus;
     
 }
 
