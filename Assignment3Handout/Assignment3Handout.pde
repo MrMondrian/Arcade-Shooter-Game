@@ -132,7 +132,19 @@ public void startBonus()
 public void bonus()
 {
   float t = currentBonusFrame / FRAMES_FOR_BONUS;
-  setProjection(lerpMatrix(t, startMatrix, endMatrix));
+  
+  t *= 2;
+  float t1;
+  if(t < 1)
+  {
+    t1 = (1 - cos(t * PI/2.0)) / 2.0;
+  }
+  else
+  {
+    t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
+  }
+  
+  setProjection(lerpMatrix(t1, startMatrix, endMatrix));
   
   currentBonusFrame++;
   if(currentBonusFrame == FRAMES_FOR_BONUS)
