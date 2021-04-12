@@ -1,10 +1,17 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
+//this class represents a key frame. It has a start position and an end position
+//upon calling getPosition, it will return the current position based on the current time
 class KeyFrame
 {
-  PVector start;
-  PVector end;
+  PVector start; //starting position
+  PVector end; //ending position
   
-  float begin;
-  float elapsed;
+  float begin; //start time
+  float elapsed; //length of the movement
   
   public KeyFrame(PVector s, PVector e, float b, float el)
   {
@@ -16,7 +23,10 @@ class KeyFrame
   
   PVector getPosition()
   {
+    //get t
     float t = (System.nanoTime() - begin) / elapsed;
+    
+    //make it ease in/out
     t *= 2;
     float t1;
     if(t < 1)
@@ -32,6 +42,7 @@ class KeyFrame
     return lerpVectors(t1);
   }
   
+  //lerps two vectors based on the input t using a helper function
   PVector lerpVectors(float t)
   {
     float x = _myLerp(start.x, end.x, t);
@@ -45,8 +56,8 @@ class KeyFrame
   }
 }
 
-
-
+//simple lerp function
+//kept it out of the key frame class in case another class needs it
 float _myLerp(float a, float b, float t)
 {
   return (1 - t)*a + t*b;

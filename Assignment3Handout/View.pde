@@ -1,3 +1,8 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
 void setPerspective()
 {
    camera(0, 2, (1) / tan(PI*30.0 / 180.0), 0, 0.5, 0, 0, 1, 0);

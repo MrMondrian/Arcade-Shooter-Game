@@ -1,5 +1,10 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
 final float PARTICLE_GRAVITY = -0.002;
-final float LIFE_PER_FRAME = 0.001;
+final float LIFE_PER_FRAME = 0.001; //this is how much life is lost every frame
 final float PARTICLE_SIZE = 0.01;
 
 class Particle
@@ -7,9 +12,9 @@ class Particle
    
   PVector position;
   PVector direction;
-  float life;
+  float life; //how much life is left
   float speed;
-  float angle;
+  float angle; //a random rotation
   color c;
   boolean alive;
   
@@ -17,12 +22,12 @@ class Particle
   {
     alive = true;
     position = p;
-    direction = new PVector(random(-1,1),random(-1,1),random(-1,1));
-    speed = random(0,0.1);
+    direction = new PVector(random(-1,1),random(-1,1),random(-1,1)); //generate a random direction
+    speed = random(0,0.1); //generate a random speed
     direction.mult(speed);
-    life = 1;
-    angle = random(0,PI/2);
-    c = color(random(0.5,1),random(0.25,0.75),random(0,0.5));
+    life = 1; //life starts off at 1
+    angle = random(0,PI/2); //make a random angle
+    c = color(random(0.5,1),random(0.25,0.75),random(0,0.5)); //make a random color that is vaguely orange
     
   }
   

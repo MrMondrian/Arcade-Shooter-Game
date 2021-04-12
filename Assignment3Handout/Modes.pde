@@ -1,3 +1,8 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
 final char KEY_VIEW = 'r';
 
 final char KEY_LEFT = 'a';

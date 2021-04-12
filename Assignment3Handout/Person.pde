@@ -1,3 +1,8 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
 Player player;
 
 float moveX = 0;

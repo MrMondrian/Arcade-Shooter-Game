@@ -1,3 +1,8 @@
+// Anthony Tan 7882272
+// April 16 2021
+// COMP 3490 A3
+// :)
+
 final float TILE_SIZE = 0.0625;
 final int WORLD_SIZE = 256;
 final float SCROLL_SPEED = 0.01;
