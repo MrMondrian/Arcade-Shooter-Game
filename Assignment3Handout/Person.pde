@@ -3,35 +3,22 @@
 // COMP 3490 A3
 // :)
 
-Player player;
 
-float moveX = 0;
-float moveY = 0;
-boolean right = false;
-boolean left = false;
-boolean up = false;
-boolean down = false;
-
-
-
+//this class represents an enemy or a player
+//amde an abstract class to limit code reuse
 abstract class Person extends Entity
 {
  
   color c;
-  PImage appearance;
-  float health;
+  PImage appearance; //the texture
+  float health; //player or enemy's hp
   
-    public void print()
+  public void print()
   {
     fill(c);
-    //top face
-    //vertex(position.x - size, position.y + size, position.z);
-    //vertex(position.x - size, position.y - size, position.z);
-    //vertex(position.x + size, position.y + size, position.z);
-    ////topface
-    //vertex(position.x - size, position.y - size, position.z);
-    //vertex(position.x + size, position.y - size, position.z);
-    //vertex(position.x + size, position.y + size, position.z); 
+    
+    //draws a simple square in NDC using triangles
+    //reminder, I did not flip the y, so up is negative
     beginShape(TRIANGLES);
 
     vertex(-1,-1,0);
@@ -46,47 +33,52 @@ abstract class Person extends Entity
   }
 }
 
-float MOVE_PROB = 0.01; //processing wouldn't let me make these static in Enemy unless it was final
-float SHOOT_PROB = 0.01;
-color ENEMY_BULLET_COLOR;
-float ENEMY_BULLET_SPEED = 0.02;
-float SPAWN_PROB = 0.003;
-PImage EnemyTexture;
-final int FRAMES_PER_SHOT = 6;
+float MOVE_PROB = 0.01; //probablity an enemy will move an a given frame. not final because it might change with difficulty
+float SHOOT_PROB = 0.01; //probability an enemy will shoot on a given frame. not final because it might change with difficulty
+color ENEMY_BULLET_COLOR; //color of the enemy. set in the setup function
+float ENEMY_BULLET_SPEED = 0.02; //speed of the enemy. not final because it might change with difficulty
+float SPAWN_PROB = 0.003; //probabilty a new enemy will spawn on a given frame. not final because it might change with difficulty
+PImage EnemyTexture; //global PImage that is the enemy texture. set in setup function
+final int FRAMES_PER_SHOT = 6; //how many frames each picture of the frame based animation last
 final float ENEMY_Z = 0;//-0.2;
+final float ENEMY_SIZE = 0.15;
 class Enemy extends Person
 {
   
-  boolean moving;
-  KeyFrame whereTo;
-  int moveFrame;
+  boolean moving; //whether or not it is current moving
+  KeyFrame whereTo; //a keyframe that guides the enemy to its next position
+  int moveFrame; //a counter for the frames that have elapsed since movement started. Used for frame based animation
   boolean movingRight;
   public Enemy()
   {
-    size = 0.15;
+    size = ENEMY_SIZE; //need to set this for collisions. can't just use the global constant
     position = new PVector(random(-1,1), random(0,-1),ENEMY_Z);
 
-    c = color(1,0,0); //make no constant
+    c = color(1,0,0); //emeies are red
+    
+    //set default values
     moving = false;
     whereTo = null;
     alive = true;
     moveFrame = 0;
     
     appearance = EnemyTexture;
-    movingRight = true;
+    movingRight = true; //just a default value
     
     type = EntityType.ENEMY_TYPE;
     
-    health = 1;
+    health = 1; //initial health is one
   }
   
   public void update()
   {
     if(!moving)
     {
+      //random chance it might start moving
       float gamble = random(0,1);
       if(gamble <= MOVE_PROB)
       {
+        //make a random location
         PVector location = new PVector(random(-0.8,0.8),random(-0.9,0.6), position.z);
         PVector diff = location.copy().sub(position);
         float time = diff.mag() * 2000000000; //make this not a magic number
@@ -219,6 +211,15 @@ class Enemy extends Person
   }
   
 }
+
+Player player;
+
+float moveX = 0;
+float moveY = 0;
+boolean right = false;
+boolean left = false;
+boolean up = false;
+boolean down = false;
 
 final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;

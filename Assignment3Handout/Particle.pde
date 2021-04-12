@@ -33,10 +33,10 @@ class Particle
   
   public void update()
   {
-    position.add(direction);
-    direction.mult(0.96);
-    direction.z += PARTICLE_GRAVITY;
-    life -= LIFE_PER_FRAME;
+    position.add(direction); //move the particle
+    direction.mult(0.96); //decelerate a little
+    direction.z += PARTICLE_GRAVITY; //account for gravity
+    life -= LIFE_PER_FRAME; //derement life
     if(life <= 0)
       alive = false;
   }
@@ -48,6 +48,9 @@ class Particle
     scale(PARTICLE_SIZE);
     rotate(angle);
     fill(c);
+    
+    //draws a simple quad in NDC
+    //reminder, I did not flip the y, so up is negative
     beginShape(QUADS);
     vertex(-1,-1,0);
     vertex(-1,1,0);
@@ -61,7 +64,6 @@ class Particle
 }
 
 
-
 class ParticleSystem
 {
   
@@ -69,7 +71,7 @@ class ParticleSystem
   boolean alive;
   
   public ParticleSystem(PVector position)
-  {
+  { //generates 100 random particles that have the same starting position
     particles = new ArrayList<Particle>();
     for(int i = 0; i < 100; i++)
     {
@@ -80,6 +82,8 @@ class ParticleSystem
   
   public void update()
   {
+    //updates every particle
+    //remove it if it's dead
     for(int i = 0; i < particles.size(); i++)
     {
       particles.get(i).update();
@@ -89,13 +93,14 @@ class ParticleSystem
         i--;
       }
     }
+    //the system is dead if all particles are dead
     if(particles.size() == 0)
       alive = false;
   }
   
   public void print()
   {
-    
+    //prints every particle 
     for(int i = 0; i < particles.size(); i++)
     {
        particles.get(i).print();

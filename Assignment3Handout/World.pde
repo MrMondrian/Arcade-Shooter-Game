@@ -106,59 +106,6 @@ class Tile
     }
   }
   
-  //public void print(float offset)
-  //{
-  //  fill(c);
-    
-    
-  //  drawTile(drawY);
-    
-  //  //beginShape(TRIANGLES);
-  //  ////left face
-  //  //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-  //  //vertex(x - TILE_SIZE, drawY - TILE_SIZE, -1);
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
-    
-  //  ////left face
-  //  //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-    
-  //  ////right face
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-  //  //vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
-    
-  //  ////right face
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY - TILE_SIZE, -1);
-  //  //vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
-    
-  //  ////front face
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, -1);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-  //  ////front face
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, -1);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-    
-    
-  //  ////drawTop(drawY);
-    
-  //  ////top face
-  //  //vertex(x - TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-  //  ////topface
-  //  //vertex(x - TILE_SIZE, drawY - TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY - TILE_SIZE, z);
-  //  //vertex(x + TILE_SIZE, drawY + TILE_SIZE, z);
-  //  //endShape();
-    
-    
-  //}
-  
   void print(float offset)
   {
     fill(c);
