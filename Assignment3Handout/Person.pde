@@ -161,6 +161,9 @@ class Enemy extends Person
   //https://forum.processing.org/two/discussion/14568/how-do-i-let-the-tiles-change-color-if-my-goomba-stands-on-them
   public void printTextureStill()
   {
+    //this draws the enemy textured in NDC with 2 triangles
+    //reminder: I didn't flip the y, so up is negative
+    
     beginShape(TRIANGLES);
     if(doTextures)
       texture(appearance);
@@ -174,18 +177,24 @@ class Enemy extends Person
     endShape(); 
   }
   
+  //draws the enemy using frame based animation
   public void printTextureMove(int frame)
   {
     
-    frame = frame % 8;
+    frame = frame % 8; //we have 8 frames, need to use modulus to pick the right one
+    
+    //since all the frames are in 1 png, we need offsets to find the right texels
     float xOffset = 0.125 * frame;
 
+    //the y offset determines which direction the goomba faces. you can look at the png to see why
     float yOffset;
     if(movingRight)
       yOffset = 0.25;
     else
       yOffset = 0.75;
     
+    //I was having some issues where the png wasn't quite perfect so the goomba was moving around in its box
+    //So I fidgured out these adjustments to fix it.
     float lowX = xOffset + 0.003 * frame;
     float highX = 0.125 + xOffset + 0.003 * frame - 0.01;
     
@@ -208,6 +217,7 @@ class Enemy extends Person
     endShape(); 
   }
   
+  //changes this object's state after being hit by another object
   public void takeHit(Entity other)
   {
     particleSystems.add(new ParticleSystem(position.copy())); //generate a new particle system if hit
@@ -229,10 +239,13 @@ class Enemy extends Person
   
 }
 
+//the global player variable
 Player player;
 
-float moveX = 0;
-float moveY = 0;
+float moveX = 0; //the amount the player is moving in the x direction in a given frame
+float moveY = 0; ////the amount the player is moving in the y direction in a given frame
+
+//these booleans indicate whether the player is moving in that direction
 boolean right = false;
 boolean left = false;
 boolean up = false;
@@ -240,26 +253,28 @@ boolean down = false;
 
 final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;
-color PLAYER_BULLET_COLOR;
+color PLAYER_BULLET_COLOR; //value of this is setup in the setup function
 final float PLAYER_BULLET_SPEED = 0.05;
 PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
+final float PLAYER_SIZE = 0.15;
+final float PLAYER_RETURN_SPEED = 0.015;
 class Player extends Person
 {  
   
-  final PVector home = new PVector(0, 0.5, PLAYER_Z); //0.15
+  final PVector home = new PVector(0, 0.5, PLAYER_Z); //this position is where the player returns to when not moving
   
   public Player()
   {
-     size = 0.15; //magic number
-     position = home.copy();
+     size = PLAYER_SIZE;
+     position = home.copy(); //the initial starting position is the home position
 
-     c = color(0,0,1);
+     c = color(0,0,1); //players are blue
      alive = true;
      appearance = PlayerTexture;
      
      type = EntityType.PLAYER_TYPE;
      
-     health = 1;
+     health = 1; //intial health is 1
   }
   
   public void print()
@@ -279,6 +294,8 @@ class Player extends Person
     
     fill(c);
     
+    //this draws the player in NDC using 2 triangles
+    //reminder: I did not flip the y so up is negative
     beginShape(TRIANGLES);
     if(doTextures)
       texture(appearance);
@@ -296,15 +313,22 @@ class Player extends Person
   
   public void update()
   {
-    if(moveX == 0 && moveY == 0)
+    if(moveX == 0 && moveY == 0) //if not moving, drift to the home position
     {
       PVector goHome = home.copy();
       goHome.sub(position);
-      goHome.mult(0.015 / (goHome.mag() + 0.1)); //magic numbers
+      //go home is now a vector from the current position to the home position
+      //however it isn't enough just to add this vector to the current position
+      //we need to scale it with distance so that speed is somewhat constant
+      //so we divide the speed by the distance
+      //the + 0.1 is to prevent division by 0
+      //another way to do this would've been to normalize the vector, but this makes it look really smooth so I kept it
+      goHome.mult(PLAYER_RETURN_SPEED / (goHome.mag() + 0.1)); 
       position.add(goHome);
     }
     else
     {
+      //if we are moving, it the current move values to the position if they don't exceed the boundaries
       if(position.x - size/2.0 + moveX >= -1 && position.x + size/2.0 +  moveX <=1)
         position.x += moveX;
       
@@ -313,17 +337,20 @@ class Player extends Person
     }
   }
   
-  
+  //returns a bullet fired by the player
   public Bullet getBullet()
   {
+    //the bullet direction is always up
+    //remember that up is negative in my version
     PVector direction = new PVector(0,-1);
     PVector location = position.copy();
     return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED, EntityType.PLAYER_TYPE);
   }
   
+  //changes the object state when it collides with another entity
   public void takeHit(Entity other)
   {
-    //smame result if it's a bullet or an enemy, instant death
+    //same result if it's a bullet or an enemy, instant death
     health = 0;
     alive = false;
     particleSystems.add(new ParticleSystem(position.copy()));

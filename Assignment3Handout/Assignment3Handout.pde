@@ -175,6 +175,7 @@ public void bonus()
   
   //set the projection
   setProjection(lerpMatrix(t1,startProj, endProj));
+  //set the Camera
   setCamera(lerpMatrix(t1, startCamera, endCamera));
   
   //check to if we're finished
@@ -222,7 +223,7 @@ public PMatrix3D lerpMatrix(float t, PMatrix3D a, PMatrix3D b)
   return aCopy;
 }
 
-//multiplies two matricies together
+//multiplies matrix by a scalar
 public void multMatrix(PMatrix3D mat, float v)
 {
   mat.m00 *= v;
