@@ -23,6 +23,10 @@ void setup() {
 
   ENEMY_BULLET_COLOR = color(1,0,0);
   PLAYER_BULLET_COLOR = color(0,0,1);
+  
+  SHOOT_PROB = 0.007;
+  SPAWN_PROB = 0.005;
+
 
   GrassTop = loadImage("GrassTop.png");
   GrassSide = loadImage("GrassSide.jpg");
@@ -250,8 +254,9 @@ public void multMatrix(PMatrix3D mat, float v)
 
 public void increaseDifficulty()
 {
-  SHOOT_PROB *= 4/3;
-  SPAWN_PROB *= 4/3;
+  SHOOT_PROB *= 5.0/4.0;
+  SPAWN_PROB *= 5.0/4.0;
+  println(SPAWN_PROB, SHOOT_PROB);
 }
 
 public float getSpawnProb()

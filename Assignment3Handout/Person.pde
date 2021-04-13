@@ -41,6 +41,14 @@ final int KILLS_PER_DIFFICULTY = 5;
 float SHOOT_PROB = 0.007; //probability an enemy will shoot on a given frame. not final because it might change with difficulty
 float SPAWN_PROB = 0.005; //probabilty a new enemy will spawn on a given frame. not final because it might change with difficulty
 
+/*
+  HOW THE DIFFICULTY SYSTEM WORKS:
+    -every time KELLS_PER_DIFFICULTY number of enemies die, increaseDifficulty is called which increases SHOOT_PROB and SPAWN_PROB
+    -there is a function called getSpawnProb() that is used to calculate the spawn probabilty
+      this function uses SPAWN_PROB, and takes into account how many enemies are live to return a new spawn prob
+      the more enemies there are, the less likely a new one is to spawn
+*/
+
 
 
 float MOVE_PROB = 0.01; //probablity an enemy will move an a given frame. not final because it might change with difficulty
@@ -50,6 +58,7 @@ PImage EnemyTexture; //global PImage that is the enemy texture. set in setup fun
 final int FRAMES_PER_SHOT = 6; //how many frames each picture of the frame based animation last
 final float ENEMY_Z = 0;//-0.2;
 final float ENEMY_SIZE = 0.15;
+final float ENEMY_HEALTH_PER_HIT = 0.5;
 
 class Enemy extends Person
 {
@@ -233,7 +242,7 @@ class Enemy extends Person
     particleSystems.add(new ParticleSystem(position.copy())); //generate a new particle system if hit
     if(other instanceof Bullet)
     {
-      health -= 0.5; //enemies take two hits to die
+      health -= ENEMY_HEALTH_PER_HIT;
       if(health <= 0)
       { 
          alive = false; 
@@ -276,6 +285,8 @@ final float PLAYER_BULLET_SPEED = 0.1;
 PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
 final float PLAYER_SIZE = 0.15;
 final float PLAYER_RETURN_SPEED = 0.015;
+final float PLAYER_HEALTH_PER_HIT = 1;
+
 class Player extends Person
 {  
   
@@ -368,9 +379,17 @@ class Player extends Person
   //changes the object state when it collides with another entity
   public void takeHit(Entity other)
   {
-    //same result if it's a bullet or an enemy, instant death
-    health = 0;
-    alive = false;
+    if(other instanceof Bullet)
+    {
+      health -= PLAYER_HEALTH_PER_HIT;
+      if(health <= 0)
+        alive = false;
+    }
+    else if(other instanceof Enemy)
+    {
+      health = 0;
+      alive = false;
+    }
     particleSystems.add(new ParticleSystem(position.copy()));
   }
 }

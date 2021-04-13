@@ -44,7 +44,7 @@ void keyPressed()
      }
   }
   
-  else if(key == KEY_SHOOT)
+  else if(key == KEY_SHOOT && player.alive)
   {
     objects.add(player.getBullet());
   }
