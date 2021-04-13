@@ -41,7 +41,7 @@ class Particle
       alive = false;
   }
   
-  public void print()
+  public void draw()
   {
     pushMatrix();
     translate(position.x, position.y, position.z);
@@ -98,12 +98,12 @@ class ParticleSystem
       alive = false;
   }
   
-  public void print()
+  public void draw()
   {
-    //prints every particle 
+    //draws every particle 
     for(int i = 0; i < particles.size(); i++)
     {
-       particles.get(i).print();
+       particles.get(i).draw();
     }
   }
 }

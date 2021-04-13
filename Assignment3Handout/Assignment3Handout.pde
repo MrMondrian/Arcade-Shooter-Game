@@ -47,15 +47,15 @@ void draw() {
   
   //spawn a new enemy randomly
   float gamble = random(0,1);
-  if(gamble <= SPAWN_PROB)
+  if(gamble <= getSpawnProb())
     objects.add(new Enemy());
   
   //this lerps the projection and camera if we are in the middle of that
   if(inBonus)
     bonus();
   
-  //this prints then moves up the world
-  world.print();
+  //this draws then moves up the world
+  world.draw();
   world.increment();
   
   //for all objects, check if it collides with any other object
@@ -72,11 +72,11 @@ void draw() {
  
   //for every active object (bullet, enemy, player)
   //update it's position,
-  //print it
+  //draw it
   //delete it if it's dead
   for(int i = objects.size() - 1; i >= 0; i--)
   {
-    objects.get(i).print();
+    objects.get(i).draw();
     objects.get(i).update();
     if(!objects.get(i).alive)
     {
@@ -87,11 +87,11 @@ void draw() {
   
   //for every active particle system
   //update it's position,
-  //print it
+  //draw it
   //delete it if it's dead
   for(int i = 0; i < particleSystems.size(); i++)
   {
-    particleSystems.get(i).print();
+    particleSystems.get(i).draw();
     particleSystems.get(i).update();
     if(!particleSystems.get(i).alive)
     {
@@ -245,5 +245,20 @@ public void multMatrix(PMatrix3D mat, float v)
   mat.m31 *= v;
   mat.m32 *= v;
   mat.m33 *= v;
+  
+}
+
+public void increaseDifficulty()
+{
+  SHOOT_PROB *= 4/3;
+  SPAWN_PROB *= 4/3;
+}
+
+public float getSpawnProb()
+{
+  float out = 0.05;
+  if(numEnemies > 0)
+    out = SPAWN_PROB - numEnemies*0.001;
+  return out;
   
 }

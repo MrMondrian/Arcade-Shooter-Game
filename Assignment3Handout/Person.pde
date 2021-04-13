@@ -13,7 +13,7 @@ abstract class Person extends Entity
   PImage appearance; //the texture
   float health; //player or enemy's hp
   
-  public void print()
+  public void draw()
   {
     fill(c);
     
@@ -33,18 +33,27 @@ abstract class Person extends Entity
   }
 }
 
+//this is where the difficulty is set. the more enemies there are, the harder the game(to a cap)
+//these 4 variables are what affect the game's difficulty
+int numKills = 0;
+int numEnemies = 0;
+final int KILLS_PER_DIFFICULTY = 5;
+float SHOOT_PROB = 0.007; //probability an enemy will shoot on a given frame. not final because it might change with difficulty
+float SPAWN_PROB = 0.005; //probabilty a new enemy will spawn on a given frame. not final because it might change with difficulty
+
+
+
 float MOVE_PROB = 0.01; //probablity an enemy will move an a given frame. not final because it might change with difficulty
-float SHOOT_PROB = 0.01; //probability an enemy will shoot on a given frame. not final because it might change with difficulty
 color ENEMY_BULLET_COLOR; //color of the enemy. set in the setup function
 float ENEMY_BULLET_SPEED = 0.02; //speed of the enemy. not final because it might change with difficulty
-float SPAWN_PROB = 0.003; //probabilty a new enemy will spawn on a given frame. not final because it might change with difficulty
 PImage EnemyTexture; //global PImage that is the enemy texture. set in setup function
 final int FRAMES_PER_SHOT = 6; //how many frames each picture of the frame based animation last
 final float ENEMY_Z = 0;//-0.2;
 final float ENEMY_SIZE = 0.15;
+
 class Enemy extends Person
 {
-  
+    
   boolean moving; //whether or not it is current moving
   KeyFrame whereTo; //a keyframe that guides the enemy to its next position
   int moveFrame; //a counter for the frames that have elapsed since movement started. Used for frame based animation
@@ -68,6 +77,7 @@ class Enemy extends Person
     type = EntityType.ENEMY_TYPE;
     
     health = 1; //initial health is one
+    numEnemies++;
   }
   
   public void update()
@@ -130,7 +140,7 @@ class Enemy extends Person
     return out;
   }
   
-  public void print()
+  public void draw()
   {
     //do transformations
     pushMatrix();
@@ -140,26 +150,26 @@ class Enemy extends Person
     
     if(doTextures)
     {
-      //print still texture if not moving
+      //draw still texture if not moving
       if(!moving)
-        printTextureStill();
+        drawTextureStill();
         
       //do frame based animation
       else
       {
         int whichShot = moveFrame / FRAMES_PER_SHOT;
-        printTextureMove(whichShot);
+        drawTextureMove(whichShot);
       }
     }
     else
     {  
-      super.print();
+      super.draw();
     }
     popMatrix();
   }
   
   //https://forum.processing.org/two/discussion/14568/how-do-i-let-the-tiles-change-color-if-my-goomba-stands-on-them
-  public void printTextureStill()
+  public void drawTextureStill()
   {
     //this draws the enemy textured in NDC with 2 triangles
     //reminder: I didn't flip the y, so up is negative
@@ -178,7 +188,7 @@ class Enemy extends Person
   }
   
   //draws the enemy using frame based animation
-  public void printTextureMove(int frame)
+  public void drawTextureMove(int frame)
   {
     
     frame = frame % 8; //we have 8 frames, need to use modulus to pick the right one
@@ -227,6 +237,10 @@ class Enemy extends Person
       if(health <= 0)
       { 
          alive = false; 
+         numKills++;
+         if(numKills % KILLS_PER_DIFFICULTY == 0)
+           increaseDifficulty();
+         numEnemies--;
       }
     }
     else if(other instanceof Player)
@@ -234,6 +248,10 @@ class Enemy extends Person
       //die instantly if player is touched
       health = 0;
       alive = false;
+      numKills++;
+      if(numKills % KILLS_PER_DIFFICULTY == 0)
+        increaseDifficulty();
+      numEnemies--;
     }
   }
   
@@ -254,7 +272,7 @@ boolean down = false;
 final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;
 color PLAYER_BULLET_COLOR; //value of this is setup in the setup function
-final float PLAYER_BULLET_SPEED = 0.05;
+final float PLAYER_BULLET_SPEED = 0.1;
 PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
 final float PLAYER_SIZE = 0.15;
 final float PLAYER_RETURN_SPEED = 0.015;
@@ -277,7 +295,7 @@ class Player extends Person
      health = 1; //intial health is 1
   }
   
-  public void print()
+  public void draw()
   {
     pushMatrix();
     

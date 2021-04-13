@@ -5,7 +5,7 @@
 
 
 //this abstract class represents all physical objects. ie: bullet, enemy, player
-//all entities must be able to print, update, and collide
+//all entities must be able to draw, update, and collide
 //this way, we can store them all in one list and simplify the code with OO
 abstract class Entity
 {
@@ -15,7 +15,7 @@ abstract class Entity
    float size;
    
    abstract void update();
-   abstract void print();
+   abstract void draw();
    abstract void takeHit(Entity other); //if it is hit, change the object state
    
    //checks to see if this object and another object are colliding

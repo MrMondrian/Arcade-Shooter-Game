@@ -7,7 +7,7 @@ void setupPOGL() {
 }
 
 // for debugging only
-void printProjection() {
+void drawProjection() {
   pogl.projection.print();
 }
 

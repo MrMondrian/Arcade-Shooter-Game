@@ -41,7 +41,7 @@ class Bullet extends Entity
       alive = false;
   }
   
-  public void print()
+  public void draw()
   {
     fill(c);
     pushMatrix();

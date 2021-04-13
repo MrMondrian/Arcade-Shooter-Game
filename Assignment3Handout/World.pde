@@ -23,10 +23,10 @@ class World
     w2 = new WorldSection(-6); //one starts behind
   }
   
-  public void print()
+  public void draw()
   {
-    w1.print();
-    w2.print();
+    w1.draw();
+    w2.draw();
   }
   
   public void increment()
@@ -67,10 +67,10 @@ class WorldSection
     }
   }
   
-  public void print()
+  public void draw()
   {
     for(int i = 0; i < tiles.length; i++)
-      tiles[i].print(offset);
+      tiles[i].draw(offset);
   }
   
 }
@@ -113,7 +113,7 @@ class Tile
     }
   }
   
-  void print(float offset)
+  void draw(float offset)
   {
     fill(c);
     
