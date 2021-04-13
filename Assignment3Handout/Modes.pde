@@ -44,12 +44,12 @@ void keyPressed()
      }
   }
   
-  if(key == KEY_SHOOT)
+  else if(key == KEY_SHOOT)
   {
     objects.add(player.getBullet());
   }
   
-  if(key == MOVE_RIGHT)
+  else if(key == MOVE_RIGHT)
   {
     right = true;
   }
@@ -66,16 +66,15 @@ void keyPressed()
     up = true;
   }
   
-  if(key == KEY_TEX)
+  else if(key == KEY_TEX)
   {
     doTextures = !doTextures;
-    println(doTextures);
   }
   
-  if(key == KEY_COLLISION)
+  else if(key == KEY_COLLISION)
     doCollision = !doCollision;
     
-  if(key == KEY_BONUS)
+  else if(key == KEY_BONUS)
     doBonus = !doBonus;
     
 }
