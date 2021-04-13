@@ -80,10 +80,15 @@ class Enemy extends Person
       {
         //make a random location
         PVector location = new PVector(random(-0.8,0.8),random(-0.9,0.6), position.z);
+        //vector from current position to keyframe position
         PVector diff = location.copy().sub(position);
+        //set the time based on how far we are traveling. guarantees all keyframes have the same speed
         float time = diff.mag() * 2000000000; //make this not a magic number
+        //make the keyframe
         whereTo = new KeyFrame(position.copy(), location, System.nanoTime(), time);
         moving = true;
+        
+        //this is for textures. need to flip it if we are moving left
         if(diff.x > 0)
           movingRight = true;
         else
@@ -92,6 +97,7 @@ class Enemy extends Person
     }
     else
     {
+      //if we are currently moving, get the next position from the keyframe
       position = whereTo.getPosition();
       moveFrame++;
       if(whereTo.finished())
@@ -101,20 +107,24 @@ class Enemy extends Person
       }
     }
     
+    //shoot a bullet
     Bullet add = getBullet();
     if(add != null)
       objects.add(add);
   }
   
+  //returns a new bullet or null
   public Bullet getBullet()
   {
     Bullet out = null;
     float gamble = random(0,1);
     if(gamble <= SHOOT_PROB)
     {
+      //make a new bullet
       PVector goHome = player.position.copy();
       goHome.sub(position);
       goHome.normalize();
+      //goHome is now a normalized vector point from out position to the player's
       out = new Bullet(position.copy(), goHome, ENEMY_BULLET_COLOR, ENEMY_BULLET_SPEED, EntityType.ENEMY_TYPE);
     }
     return out;
@@ -122,14 +132,19 @@ class Enemy extends Person
   
   public void print()
   {
+    //do transformations
     pushMatrix();
     translate(position.x, position.y, position.z);
     scale(size);
     
+    
     if(doTextures)
     {
+      //print still texture if not moving
       if(!moving)
         printTextureStill();
+        
+      //do frame based animation
       else
       {
         int whichShot = moveFrame / FRAMES_PER_SHOT;
@@ -161,6 +176,7 @@ class Enemy extends Person
   
   public void printTextureMove(int frame)
   {
+    
     frame = frame % 8;
     float xOffset = 0.125 * frame;
 
@@ -194,10 +210,10 @@ class Enemy extends Person
   
   public void takeHit(Entity other)
   {
-    particleSystems.add(new ParticleSystem(position.copy()));
+    particleSystems.add(new ParticleSystem(position.copy())); //generate a new particle system if hit
     if(other instanceof Bullet)
     {
-      health -= 0.5;
+      health -= 0.5; //enemies take two hits to die
       if(health <= 0)
       { 
          alive = false; 
@@ -205,6 +221,7 @@ class Enemy extends Person
     }
     else if(other instanceof Player)
     {
+      //die instantly if player is touched
       health = 0;
       alive = false;
     }

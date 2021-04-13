@@ -5,14 +5,34 @@
 
 void setPerspective()
 {
-   camera(0, 2, (1) / tan(PI*30.0 / 180.0), 0, 0.5, 0, 0, 1, 0);
-   frustum(-0.5, 0.5, -0.5, 0.5, 1, -1);
+   setPerpCamera();
+   setPerpProj();
    isOrtho = false;
 }
 
 void setOrtho()
 {
-  camera(0, 0, (0.5) / tan(PI*30.0 / 180.0), 0,0, 0, 0, 1, 0);
-  ortho(-1,1,-1,1);
+  setOrthoCamera();
+  setOrthoProj();
   isOrtho = true;
+}
+
+void setPerpCamera()
+{
+   camera(0, 2, (1) / tan(PI*30.0 / 180.0), 0, 0.5, 0, 0, 1, 0);
+}
+
+void setPerpProj()
+{
+  frustum(-0.5, 0.5, -0.5, 0.5, 1, -1);
+}
+
+void setOrthoCamera()
+{
+   camera(0, 0, (0.5) / tan(PI*30.0 / 180.0), 0,0, 0, 0, 1, 0);
+}
+
+void setOrthoProj()
+{
+  ortho(-1,1,-1,1);
 }

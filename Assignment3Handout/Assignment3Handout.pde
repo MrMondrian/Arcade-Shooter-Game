@@ -120,26 +120,36 @@ void pollKeys()
 
 final float FRAMES_FOR_BONUS = 50; //how many frames the bonus takes
 int currentBonusFrame; //how for along we are
-PMatrix3D startMatrix; //initial projection, a value of the lerp
-PMatrix3D endMatrix; //b value of the lerp
+PMatrix3D startProj; //initial projection, a value of the lerp
+PMatrix3D endProj; //b value of the lerp
+PMatrix3D startCamera;
+PMatrix3D endCamera;
 boolean inBonus; //whether we are currently doing the bonus
 public void startBonus()
 {
   inBonus = true;
   currentBonusFrame = 0;
   
-  startMatrix = getProjection();
+  startProj = getProjection();
+  startCamera = getCamera();
   
   if(isOrtho)
   {
-    setPerspective(); //we do this just so the endMatrix is the current projection so we can use getProjection to get it
-    endMatrix = getProjection();
+    setPerpProj(); //we do this just so the endMatrix is the current projection so we can use getProjection to get it
+    endProj = getProjection();
+    
+    setPerpCamera();
+    endCamera = getCamera();
+    
     isOrtho = false;
   }
   else
   {
-    setOrtho();
-    endMatrix = getProjection();
+    setOrthoProj();
+    endProj = getProjection();
+    
+    setOrthoCamera();
+    endCamera = getCamera();
     isOrtho = true;
   }
   
@@ -164,14 +174,16 @@ public void bonus()
   }
   
   //set the projection
-  setProjection(lerpMatrix(t1, startMatrix, endMatrix));
+  setProjection(lerpMatrix(t1,startProj, endProj));
+  setCamera(lerpMatrix(t1, startCamera, endCamera));
   
   //check to if we're finished
   currentBonusFrame++;
   if(currentBonusFrame == FRAMES_FOR_BONUS)
   {
     inBonus = false;
-    setProjection(endMatrix);
+    setProjection(endProj);
+    setCamera(endCamera);
   }
 }
 

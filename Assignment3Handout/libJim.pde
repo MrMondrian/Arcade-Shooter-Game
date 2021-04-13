@@ -40,3 +40,17 @@ assert pogl != null:
   "no PGraphics Open GL Conext";
   return pogl.projection.get();
 }
+
+void setCamera(PMatrix3D mat) {
+assert pogl != null: 
+  "no PGraphics Open GL Conext";
+  //pogl.setProjection(mat.get());
+  pogl.camera.set(mat.get());
+  pogl.updateProjmodelview();
+}
+
+PMatrix3D getCamera() {
+assert pogl != null: 
+  "no PGraphics Open GL Conext";
+  return pogl.camera.get();
+}
