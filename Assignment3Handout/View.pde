@@ -19,7 +19,7 @@ void setOrtho()
 
 void setPerpCamera()
 {
-   camera(0, 2, (1) / tan(PI*30.0 / 180.0), 0, 0.5, 0, 0, 1, 0);
+   camera(0, 2, 1.73, 0, 0.5, 0, 0, 1, 0);
 }
 
 void setPerpProj()
@@ -29,7 +29,7 @@ void setPerpProj()
 
 void setOrthoCamera()
 {
-   camera(0, 0, (0.5) / tan(PI*30.0 / 180.0), 0,0, 0, 0, 1, 0);
+   camera(0, 0, 1.73 / 2, 0,0, 0, 0, 1, 0);
 }
 
 void setOrthoProj()
