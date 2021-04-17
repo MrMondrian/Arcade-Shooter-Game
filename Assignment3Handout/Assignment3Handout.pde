@@ -3,6 +3,15 @@
 // COMP 3490 A3
 // :)
 
+//NOTE: I did not flip the y. If you are ever confused at something in my coordinate system, it could be that my Y is negative to your expectations.
+//
+// I am working in NDC. In the orthographic view, the center of the screen is 0,0.
+// It ranges from -1 to 1 in both directions.
+// Everything I draw will always be done in NDC and transforms are used accordingly.
+//
+// All objects that can collide, so Bullet, Enemy, Player, all extend the class called Entity.
+// Particles are particle systems are not children of Entity, they are their own thing.
+
 //all the active objects that can collide (bullet, enemy, player)
 ArrayList<Entity> objects = new ArrayList<Entity>();
 //all the active particle systems
@@ -166,16 +175,18 @@ public void bonus()
   float t = currentBonusFrame / FRAMES_FOR_BONUS;
   
   //make t ease in/out
-  t *= 2;
-  float t1;
-  if(t < 1)
-  {
-    t1 = (1 - cos(t * PI/2.0)) / 2.0;
-  }
-  else
-  {
-    t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
-  }
+  //t *= 2;
+  //float t1;
+  //if(t < 1)
+  //{
+  //  t1 = (1 - cos(t * PI/2.0)) / 2.0;
+  //}
+  //else
+  //{
+  //  t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
+  //}
+  
+  float t1 = (1-cos(t*PI))/2.0;
   
   //set the projection
   setProjection(lerpMatrix(t1,startProj, endProj));
@@ -256,14 +267,13 @@ public void increaseDifficulty()
 {
   SHOOT_PROB *= 5.0/4.0;
   SPAWN_PROB *= 5.0/4.0;
-  println(SPAWN_PROB, SHOOT_PROB);
 }
 
 public float getSpawnProb()
 {
   float out = 0.05;
   if(numEnemies > 0)
-    out = SPAWN_PROB - numEnemies*0.001;
+    out = SPAWN_PROB * (float)Math.pow(0.8,numEnemies);
   return out;
   
 }

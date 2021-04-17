@@ -4,7 +4,7 @@
 // :)
 
 final float BULLET_SIZE = 0.06;
-final float BULLET_Z = 0; //0.1;
+final float BULLET_Z = -0.2; //0.1;
 class Bullet extends Entity
 {
   PVector direction; //where the bullet is headed, a normalized vector

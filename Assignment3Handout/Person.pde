@@ -54,11 +54,17 @@ float SPAWN_PROB = 0.005; //probabilty a new enemy will spawn on a given frame. 
 float MOVE_PROB = 0.01; //probablity an enemy will move an a given frame. not final because it might change with difficulty
 color ENEMY_BULLET_COLOR; //color of the enemy. set in the setup function
 float ENEMY_BULLET_SPEED = 0.02; //speed of the enemy. not final because it might change with difficulty
+
+//this is where I got the goomba from
+//https://forum.processing.org/two/discussion/14568/how-do-i-let-the-tiles-change-color-if-my-goomba-stands-on-them
 PImage EnemyTexture; //global PImage that is the enemy texture. set in setup function
+
 final int FRAMES_PER_SHOT = 6; //how many frames each picture of the frame based animation last
-final float ENEMY_Z = 0;//-0.2;
+final float ENEMY_Z = -0.1;//-0.2;
 final float ENEMY_SIZE = 0.15;
 final float ENEMY_HEALTH_PER_HIT = 0.5;
+
+int enemyCount = 0;
 
 class Enemy extends Person
 {
@@ -70,8 +76,10 @@ class Enemy extends Person
   public Enemy()
   {
     size = ENEMY_SIZE; //need to set this for collisions. can't just use the global constant
-    position = new PVector(random(-1,1), random(0,-1),ENEMY_Z);
-
+    position = new PVector(random(-1,1), random(0,-1),ENEMY_Z - enemyCount*0.001); //the -enemyCount*0.001 is there is help z-fighting
+    enemyCount++;
+  
+    
     c = color(1,0,0); //emeies are red
     
     //set default values
@@ -282,8 +290,8 @@ final float PLAYER_MOVE_SPEED = 0.05;
 final float PLAYER_Z = 0;
 color PLAYER_BULLET_COLOR; //value of this is setup in the setup function
 final float PLAYER_BULLET_SPEED = 0.1;
-PImage PlayerTexture; //https://www.pikpng.com/transpng/iRioihh/
-final float PLAYER_SIZE = 0.15;
+PImage PlayerTexture; //this is where I got the player texture from https://www.pikpng.com/transpng/iRioihh/
+final float PLAYER_SIZE = 0.1;
 final float PLAYER_RETURN_SPEED = 0.015;
 final float PLAYER_HEALTH_PER_HIT = 1;
 
@@ -373,6 +381,7 @@ class Player extends Person
     //remember that up is negative in my version
     PVector direction = new PVector(0,-1);
     PVector location = position.copy();
+    location.y -= size;
     return new Bullet(location, direction, PLAYER_BULLET_COLOR, PLAYER_BULLET_SPEED, EntityType.PLAYER_TYPE);
   }
   

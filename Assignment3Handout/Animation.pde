@@ -27,16 +27,18 @@ class KeyFrame
     float t = (System.nanoTime() - begin) / elapsed;
     
     //make it ease in/out
-    t *= 2;
-    float t1;
-    if(t < 1)
-    {
-      t1 = (1 - cos(t * PI/2.0)) / 2.0;
-    }
-    else
-    {
-      t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
-    }
+    //t *= 2;
+    //float t1;
+    //if(t < 1)
+    //{
+    //  t1 = (1 - cos(t * PI/2.0)) / 2.0;
+    //}
+    //else
+    //{
+    //  t1 = 0.5 +  (sin((t-1) * PI/2.0)) /2.0;
+    //}
+    
+    float t1 = (1-cos(t*PI))/2.0;
   
     
     return lerpVectors(t1);

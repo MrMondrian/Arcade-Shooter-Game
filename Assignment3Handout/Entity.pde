@@ -21,10 +21,16 @@ abstract class Entity
    //checks to see if this object and another object are colliding
    public void collide(Entity other)
    {
-     if(type != other.type && position.dist(other.position) <= size + other.size)
+     //only collide if they are opposite types
+     if(type != other.type)
      {
-       takeHit(other);
-       other.takeHit(this);
+       //calculate distance while ignoring z
+       float dist = (float)(Math.pow((other.position.y - position.y),2) + Math.pow((other.position.x - position.x),2));
+       if(dist <= Math.pow(size + other.size,2))
+       {
+         takeHit(other);
+         other.takeHit(this);
+       }
      }
    }
 }
